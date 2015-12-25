@@ -47,25 +47,21 @@ namespace GTATest.Controllers
         /// <summary>
         /// Gets the height of this <see cref="ControlledEntity"/>.
         /// </summary>
-        [JsonIgnore]
         public float Height => Size.Z;
 
         /// <summary>
         /// Gets the length of this <see cref="ControlledEntity"/>.
         /// </summary>
-        [JsonIgnore]
         public float Length => Size.Y;
 
         /// <summary>
         /// Gets the width of this <see cref="ControlledEntity"/>.
         /// </summary>
-        [JsonIgnore]
         public float Width => Size.X;
 
         /// <summary>
         /// Gets the size of this <see cref="ControlledEntity"/>.
         /// </summary>
-        [JsonIgnore]
         public Vector3 Size
         {
             get
@@ -84,55 +80,46 @@ namespace GTATest.Controllers
         /// <summary>
         /// Gets whether a Player is nearby this ControlledEntity.
         /// </summary>
-        [JsonIgnore]
         public bool IsPlayerNearby { get; private set; }
 
         /// <summary>
         /// Gets whether a Player is touching this ControlledEntity.
         /// </summary>
-        [JsonIgnore]
         public bool IsTouchingPlayer { get; private set; }
 
         /// <summary>
         /// Gets the lifespan of this ControlledEntity.
         /// </summary>
-        [JsonIgnore]
         public TimeSpan LifeSpan => (DateTime.Now - StartDateTime).Duration();
 
         /// <summary>
         /// Gets the date or time this ControlledEntity was added.
         /// </summary>
-        [JsonIgnore]
         public DateTime StartDateTime { get; }
 
         /// <summary>
         /// Gets or sets whether this <see cref="ControlledEntity"/> should track interactions.
         /// </summary>
-        [JsonProperty("trackInteractions")]
         public bool TrackInteractions { get; protected set; } = true;
 
         /// <summary>
         /// Gets or sets whether this <see cref="ControlledEntity"/> should track events.
         /// </summary>
-        [JsonProperty("trackEvents")]
         protected bool TrackEvents { get; set; } = true;
 
         /// <summary>
         /// Gets or sets the sufficient distance for a player to interact with this <see cref="ControlledEntity"/>.
         /// </summary>
-        [JsonProperty("playerInteractionDistance")]
         protected float PlayerInteractionDistance { get; set; } = 2f;
 
         /// <summary>
         /// Gets or sets the sufficient distance for a ped to interact with this <see cref="ControlledEntity"/>.
         /// </summary>
-        [JsonProperty("pedInteractionDistance")]
         protected float PedInteractionDistance { get; set; } = 2f;
 
         /// <summary>
         /// Gets the controlled Entity of this <see cref="ControlledEntity"/>.
         /// </summary>
-        [JsonIgnore]
         public Entity Entity { get; protected set; }
 
         #endregion
