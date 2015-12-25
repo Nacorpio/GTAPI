@@ -1,5 +1,4 @@
 ﻿using GTA;
-using Microsoft.SqlServer.Server;
 using Newtonsoft.Json;
 
 namespace GTATest.Models
@@ -7,15 +6,15 @@ namespace GTATest.Models
     /// <summary>
     /// Represents a JSON-serialized <see cref="Entity"/>.
     /// </summary>
-    public struct JEntity
+    public class JEntity : JSerializable<JEntity, Entity>
     {
         /// <summary>
-        /// Initializes an instance of the <see cref="JEntity"/> structure.
+        /// Initializes an instance of the <see cref="JEntity"/> class.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        public JEntity(Entity entity)
+        public JEntity(Entity entity) : base(entity)
         {
-            Position = JVector3.ToJVector3(entity.Position);
+            Position = (JVector3) JVector3.ToObject(entity.Position);
             Alpha = entity.Alpha;
             Health = entity.Health;
             Heading = entity.Heading;
@@ -30,26 +29,7 @@ namespace GTATest.Models
             IsVisible = entity.IsVisible;
             MaxHealth = entity.MaxHealth;
             LodDistance = entity.LodDistance;
-            Rotation = JVector3.ToJVector3(entity.Rotation);
-        }
-
-        /// <summary>
-        /// Converts the specified <see cref="Entity"/> to a <see cref="JEntity"/>.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <returns></returns>
-        public static JEntity ToJEntity(Entity entity)
-        {
-            return new JEntity(entity);
-        }
-
-        /// <summary>
-        /// Converts this <see cref="JEntity"/> to a JSON-serialized string.
-        /// </summary>
-        /// <returns></returns>
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
+            Rotation = (JVector3) JVector3.ToObject(entity.Rotation);
         }
 
         /// <summary>

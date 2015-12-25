@@ -6,13 +6,13 @@ namespace GTATest.Models
     /// <summary>
     /// Represents a JSON-serialized <see cref="Model"/>.
     /// </summary>
-    public struct JModel
+    public class JModel : JSerializable<JModel, Model>
     {
         /// <summary>
-        /// Initializes an instance of the <see cref="JModel"/> structure.
+        /// Initializes an instance of the <see cref="JModel"/> class.
         /// </summary>
         /// <param name="model">The model.</param>
-        public JModel(Model model)
+        public JModel(Model model) : base(model)
         {
             Hash = model.Hash;
         }
@@ -29,24 +29,5 @@ namespace GTATest.Models
         /// </summary>
         [JsonProperty("hash")]
         public int Hash { get; }
-
-        /// <summary>
-        /// Converts the specified <see cref="Model"/> to a <see cref="JModel"/>.
-        /// </summary>
-        /// <param name="model">The model.</param>
-        /// <returns></returns>
-        public static JModel ToJModel(Model model)
-        {
-            return new JModel(model);
-        }
-
-        /// <summary>
-        /// Converts this <see cref="JModel"/> to a JSON-serialized string.
-        /// </summary>
-        /// <returns></returns>
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
     }
 }

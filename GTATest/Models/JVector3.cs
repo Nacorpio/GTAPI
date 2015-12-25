@@ -1,19 +1,17 @@
-﻿using System;
-using GTA.Math;
-using Newtonsoft.Json;
+﻿using GTA.Math;
 
 namespace GTATest.Models
 {
     /// <summary>
     /// Represents a JSON-serialized <see cref="Vector3"/>.
     /// </summary>
-    public struct JVector3
+    public class JVector3 : JSerializable<JVector3, Vector3>
     {
         /// <summary>
-        /// Initializes an instance of the JVector3 structure.
+        /// Initializes an instance of the JVector3 class.
         /// </summary>
         /// <param name="vector">The vector.</param>
-        public JVector3(Vector3 vector)
+        public JVector3(Vector3 vector) : base(vector)
         {
             X = vector.X;
             Y = vector.Y;
@@ -34,24 +32,5 @@ namespace GTATest.Models
         /// Gets the Z-coordinate of this JVector3.
         /// </summary>
         public float Z { get; }
-
-        /// <summary>
-        /// Converts the specified <see cref="Vector3"/> to a <see cref="JVector3"/>.
-        /// </summary>
-        /// <param name="vector">The vector.</param>
-        /// <returns></returns>
-        public static JVector3 ToJVector3(Vector3 vector)
-        {
-            return new JVector3(vector);
-        }
-
-        /// <summary>
-        /// Converts this <see cref="JVector3"/> to a JSON-serialized string.
-        /// </summary>
-        /// <returns></returns>
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
     }
 }

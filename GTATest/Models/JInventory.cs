@@ -8,16 +8,16 @@ namespace GTATest.Models
     /// <summary>
     /// Represents a JSON-serialized <see cref="Inventory"/>.
     /// </summary>
-    public struct JInventory
+    public class JInventory : JSerializable<JInventory, Inventory>
     {
         /// <summary>
-        /// Initializes an instance of the <see cref="JInventory"/> structure.
+        /// Initializes an instance of the <see cref="JInventory"/> class.
         /// </summary>
         /// <param name="inventory">The inventory.</param>
-        public JInventory(Inventory inventory)
+        public JInventory(Inventory inventory) : base(inventory)
         {
             Name = inventory.Name;
-            Items = inventory.Items.Select(JItemStack.ToJItemStack);
+            Items = inventory.Items.Select(item => (JItemStack) JItemStack.ToObject(item));
         }
 
         /// <summary>
@@ -31,24 +31,5 @@ namespace GTATest.Models
         /// </summary>
         [JsonProperty("items")]
         public IEnumerable<JItemStack> Items { get; }
-
-        /// <summary>
-        /// Converts the specified <see cref="Inventory"/> to a <see cref="JInventory"/>.
-        /// </summary>
-        /// <param name="inventory">The inventory.</param>
-        /// <returns></returns>
-        public static JInventory ToJInventory(Inventory inventory)
-        {
-            return new JInventory(inventory);
-        }
-
-        /// <summary>
-        /// Converts this <see cref="JInventory"/> to a JSON-serialized string.
-        /// </summary>
-        /// <returns></returns>
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
     }
 }

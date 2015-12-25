@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 
 namespace GTATest.Storage
 {
-    public class Inventory : IInventory, ISaveable
+    public class Inventory : IInventory, ISaveable<JInventory, Inventory>
     {
         /// <summary>
         /// Initializes an instance of the <see cref="Inventory"/> class.
@@ -25,6 +25,15 @@ namespace GTATest.Storage
         {
             Name = name;
             Menu = new InventoryMenu(this);
+        }
+
+        /// <summary>
+        /// Gets the model of this Inventory.
+        /// </summary>
+        /// <returns></returns>
+        public JInventory GetModel()
+        {
+            return new JInventory(this);
         }
 
         /// <summary>

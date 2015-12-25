@@ -13,7 +13,7 @@ namespace GTATest.Controllers
     /// <summary>
     /// Represents a <see cref="Player"/> that can be controlled in an advanced way.
     /// </summary>
-    public class ControlledPlayer : ControlledPed, ISaveable
+    public class ControlledPlayer : ControlledPed, ISaveable<JPed, Ped>
     {
         public delegate void ControlledPlayerEventHandler(object sender, EventArgs e);
 
@@ -32,17 +32,24 @@ namespace GTATest.Controllers
 
             Game.Player.Character.Weapons.RemoveAll();
             SpawnWeapons.ToList().ForEach(weapon => Inventory.Add(weapon.Key, weapon.Value));
-
-            Save();
         }
 
         /// <summary>
-        /// Saves this ISaveable as a JSON file at the specified path.
+        /// Saves this <see cref="ISaveable{T,U}"/>.
         /// </summary>
         public void Save()
         {
             Directory.CreateDirectory("GTAPI");
-            File.WriteAllText(@"GTAPI\player.json", ToModel().ToJson());
+            File.WriteAllText(@"GTAPI\player.json", GetModel().ToJson(Formatting.Indented));
+        }
+
+        /// <summary>
+        /// Gets the model of this ControlledPlayer.
+        /// </summary>
+        /// <returns></returns>
+        public JPed GetModel()
+        {
+            return new JPed(Entity);
         }
 
         /// <summary>
@@ -85,15 +92,6 @@ namespace GTATest.Controllers
             if (player.IsRidingTrain) {
                 RidingTrain?.Invoke(sender, e);
             }
-        }
-
-        /// <summary>
-        /// Converts this <see cref="ControlledPlayer"/> to a serializable JSON model.
-        /// </summary>
-        /// <returns></returns>
-        public JPlayer ToModel()
-        {
-            return new JPlayer(this);
         }
     }
 }

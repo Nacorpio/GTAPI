@@ -6,20 +6,20 @@ namespace GTATest.Models
     /// <summary>
     /// Represents a JSON-serialized <see cref="Item"/>.
     /// </summary>
-    public struct JItem
+    public class JItem : JSerializable<JItem, Item>
     {
         /// <summary>
         /// Initializes an instance of the <see cref="JItem"/> structure.
         /// </summary>
         /// <param name="item">The item.</param>
-        public JItem(Item item)
+        public JItem(Item item) : base(item)
         {
             Id = item.Id;
             DisplayName = item.DisplayName;
             Name = item.Name;
             Summary = item.Summary;
             IsWeapon = item.IsWeapon;
-            Model = JModel.ToJModel(item.DropModel);
+            Model = (JModel) JModel.ToObject(item.DropModel);
         }
 
         /// <summary>
@@ -57,24 +57,5 @@ namespace GTATest.Models
         /// </summary>
         [JsonProperty("model")]
         public JModel Model { get; }
-
-        /// <summary>
-        /// Converts the specified <see cref="Item"/> to a <see cref="JItem"/>.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        /// <returns></returns>
-        public static JItem ToJItem(Item item)
-        {
-            return new JItem(item);
-        }
-
-        /// <summary>
-        /// Converts this <see cref="JItem"/> to a JSON-serialized string.
-        /// </summary>
-        /// <returns></returns>
-        public string ToJson()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
     }
 }
