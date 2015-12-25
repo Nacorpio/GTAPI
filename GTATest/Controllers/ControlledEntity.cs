@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using GTA;
 using GTA.Math;
-using Newtonsoft.Json;
 
 namespace GTATest.Controllers
 {

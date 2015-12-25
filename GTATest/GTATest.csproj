@@ -80,11 +80,13 @@
     <Compile Include="Menus\InventoryWeaponsMenu.cs" />
     <Compile Include="Menus\ItemMenu.cs" />
     <Compile Include="Menus\MainMenu.cs" />
+    <Compile Include="Models\JEntity.cs" />
     <Compile Include="Models\JInventory.cs" />
     <Compile Include="Models\JItem.cs" />
     <Compile Include="Models\JItemStack.cs" />
     <Compile Include="Models\JModel.cs" />
     <Compile Include="Models\JPlayer.cs" />
+    <Compile Include="Models\JVector3.cs" />
     <Compile Include="ObjectSpawner.cs" />
     <Compile Include="SpawnScript.cs" />
     <Compile Include="Storage\IInventory.cs" />
