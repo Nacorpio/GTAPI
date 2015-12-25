@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7B327477-13C7-4704-AE8C-BCAB6E023300}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GTATest</RootNamespace>
+    <AssemblyName>GTATest</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NativePI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Games\SteamLibrary\SteamApps\common\Grand Theft Auto V\NativePI.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\pVault\pVault\bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="ScriptHookVDotNet">
+      <HintPath>D:\Games\SteamLibrary\SteamApps\common\Grand Theft Auto V\ScriptHookVDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Ambience\Environment.cs" />
+    <Compile Include="Controllers\ControlledEntity.cs" />
+    <Compile Include="Controllers\ControlledList.cs" />
+    <Compile Include="Controllers\ControlledManager.cs" />
+    <Compile Include="Controllers\ControlledPed.cs" />
+    <Compile Include="Controllers\ControlledPlayer.cs" />
+    <Compile Include="Controllers\ControlledProp.cs" />
+    <Compile Include="Controllers\ControlledVehicle.cs" />
+    <Compile Include="Crafting\Recipe.cs" />
+    <Compile Include="Interactive\InteractiveEntity.cs" />
+    <Compile Include="Interactive\InteractiveProp.cs" />
+    <Compile Include="Interactive\InteractiveVehicle.cs" />
+    <Compile Include="EnvironmentScript.cs" />
+    <Compile Include="Interactive\Props\PropAmmoCrate.cs" />
+    <Compile Include="Interactive\Props\PropHealthPack.cs" />
+    <Compile Include="Interactive\Props\PropPackage.cs" />
+    <Compile Include="Interactive\Props\PropPickup.cs" />
+    <Compile Include="ISaveable.cs" />
+    <Compile Include="Items\ItemExample.cs" />
+    <Compile Include="Items\ItemWeapon.cs" />
+    <Compile Include="MenuScript.cs" />
+    <Compile Include="Menus\InventoryMenu.cs" />
+    <Compile Include="Menus\InventoryWeaponsMenu.cs" />
+    <Compile Include="Menus\ItemMenu.cs" />
+    <Compile Include="Menus\MainMenu.cs" />
+    <Compile Include="Models\JInventory.cs" />
+    <Compile Include="Models\JItem.cs" />
+    <Compile Include="Models\JItemStack.cs" />
+    <Compile Include="Models\JModel.cs" />
+    <Compile Include="Models\JPlayer.cs" />
+    <Compile Include="ObjectSpawner.cs" />
+    <Compile Include="SpawnScript.cs" />
+    <Compile Include="Storage\IInventory.cs" />
+    <Compile Include="Items\Item.cs" />
+    <Compile Include="Items\ItemStack.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Storage\Inventory.cs" />
+    <Compile Include="Utilities\ExtendedCollection.cs" />
+    <Compile Include="Utilities\IPL.cs" />
+    <Compile Include="Utilities\IPLRepository.cs" />
+    <Compile Include="Utilities\ItemRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interactive\Peds\" />
+    <Folder Include="Interactive\Vehicles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>COPY "$(TargetDir)$(TargetFileName)" "D:\Games\SteamLibrary\SteamApps\common\Grand Theft Auto V\scripts"
+COPY "$(TargetDir)$(TargetFileName)" "C:\Users\Nacorpio\Dropbox\Programming\Visual C-Sharp\GTATest Builds"
+COPY "$(TargetDir)$(TargetFileName)" "C:\Users\Nacorpio\OneDrive\GTATest Builds"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
