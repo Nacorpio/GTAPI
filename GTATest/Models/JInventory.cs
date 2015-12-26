@@ -21,16 +21,6 @@ namespace GTATest.Models
         }
 
         /// <summary>
-        /// Deserializes the specified JSON-formatted string, and converts it to a <see cref="JInventory"/>.
-        /// </summary>
-        /// <param name="json">The JSON string.</param>
-        /// <returns></returns>
-        public static JInventory ToObject(string json)
-        {
-            return (JInventory) JsonConvert.DeserializeObject(json);
-        }
-
-        /// <summary>
         /// Gets the name of this <see cref="JInventory"/>.
         /// </summary>
         [JsonProperty("name")]

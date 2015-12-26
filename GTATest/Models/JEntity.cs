@@ -33,16 +33,6 @@ namespace GTATest.Models
         }
 
         /// <summary>
-        /// Deserializes the specified JSON-formatted string, and converts it to a <see cref="JEntity"/>.
-        /// </summary>
-        /// <param name="json">The JSON string.</param>
-        /// <returns></returns>
-        public static JEntity ToObject(string json)
-        {
-            return (JEntity) JsonConvert.DeserializeObject(json);
-        }
-
-        /// <summary>
         /// Gets the position of this <see cref="JEntity"/>.
         /// </summary>
         [JsonProperty("position")]
