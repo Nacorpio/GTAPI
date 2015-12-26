@@ -8,16 +8,16 @@ namespace GTATest.Models
     /// <summary>
     /// Represents a JSON-serialized <see cref="Inventory"/>.
     /// </summary>
-    public class JInventory : JSerializable<JInventory, Inventory>
+    public class JInventory : JsonModel<Inventory>
     {
         /// <summary>
         /// Initializes an instance of the <see cref="JInventory"/> class.
         /// </summary>
         /// <param name="inventory">The inventory.</param>
-        public JInventory(Inventory inventory) : base(inventory)
+        public JInventory(Inventory inventory)
         {
             Name = inventory.Name;
-            Items = inventory.Items.Select(item => (JItemStack) JItemStack.ToObject(item));
+            Items = inventory.Items.Select(item => new JItemStack(item));
         }
 
         /// <summary>

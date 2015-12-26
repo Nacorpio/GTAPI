@@ -25,7 +25,7 @@ namespace GTATest.Items
             Name = name;
         }
 
-        protected Item(string name) : this(ItemRepository.Count - 1, name)
+        protected Item(string name) : this(ItemRepository.Count, name)
         {}
 
         /// <summary>

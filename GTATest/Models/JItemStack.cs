@@ -6,13 +6,13 @@ namespace GTATest.Models
     /// <summary>
     /// Represents a JSON-serialized <see cref="ItemStack"/>.
     /// </summary>
-    public class JItemStack : JSerializable<JItemStack, ItemStack>
+    public class JItemStack : JsonModel<ItemStack>
     {
         /// <summary>
         /// Initializes an instance of the <see cref="JItemStack"/> class.
         /// </summary>
         /// <param name="stack"></param>
-        public JItemStack(ItemStack stack) : base(stack)
+        public JItemStack(ItemStack stack)
         {
             ItemId = stack.Item.Id;
             Size = stack.Size;

@@ -1,6 +1,7 @@
 ﻿using System;
 using GTA;
 using GTA.Native;
+using GTATest.Models;
 
 namespace GTATest.Controllers
 {
@@ -12,6 +13,17 @@ namespace GTATest.Controllers
         /// <param name="entity">The entity.</param>
         public ControlledPed(Entity entity) : base(entity)
         {
+        }
+
+        /// <summary>
+        /// Gets the model of this <see cref="ControlledPed"/>.
+        /// </summary>
+        /// <returns></returns>
+        public JPed GetModel()
+        {
+            if (((Ped) Entity) != null)
+                return new JPed((Ped) Entity);
+            return null;
         }
 
         /// <summary>

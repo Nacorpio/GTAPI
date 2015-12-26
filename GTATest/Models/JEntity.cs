@@ -6,15 +6,15 @@ namespace GTATest.Models
     /// <summary>
     /// Represents a JSON-serialized <see cref="Entity"/>.
     /// </summary>
-    public class JEntity : JSerializable<JEntity, Entity>
+    public class JEntity : JsonModel<Entity>
     {
         /// <summary>
         /// Initializes an instance of the <see cref="JEntity"/> class.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        public JEntity(Entity entity) : base(entity)
+        public JEntity(Entity entity)
         {
-            Position = (JVector3) JVector3.ToObject(entity.Position);
+            Position = new JVector3(entity.Position);
             Alpha = entity.Alpha;
             Health = entity.Health;
             Heading = entity.Heading;
@@ -29,7 +29,7 @@ namespace GTATest.Models
             IsVisible = entity.IsVisible;
             MaxHealth = entity.MaxHealth;
             LodDistance = entity.LodDistance;
-            Rotation = (JVector3) JVector3.ToObject(entity.Rotation);
+            Rotation = new JVector3(entity.Rotation);
         }
 
         /// <summary>

@@ -5,7 +5,7 @@ namespace GTATest.Models
     /// <summary>
     /// Represents a JSON-serialized <see cref="Ped"/>.
     /// </summary>
-    public class JPed : JSerializable<JPed, Ped>
+    public class JPed : JEntity
     {
         /// <summary>
         /// Initializes an instance of the <see cref="JPed"/> class.
@@ -17,20 +17,7 @@ namespace GTATest.Models
             Armor = ped.Armor;
             CanFlyThroughWindscreen = ped.CanFlyThroughWindscreen;
             CanRagdoll = ped.CanRagdoll;
-            Entity = new JEntity(ped);
         }
-
-        /// <summary>
-        /// Initializes an instance of the <see cref="JPed"/> class.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        public JPed(Entity entity) : this((Ped) entity)
-        {}
-
-        /// <summary>
-        /// Gets the entity of this JPed.
-        /// </summary>
-        public JEntity Entity { get; }
 
         /// <summary>
         /// Gets the accuracy of this JPed.

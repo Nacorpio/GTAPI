@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using GTA;
 using GTA.Native;
 using GTATest.Models;
 using GTATest.Storage;
-using Newtonsoft.Json;
 
 namespace GTATest.Controllers
 {
     /// <summary>
     /// Represents a <see cref="Player"/> that can be controlled in an advanced way.
     /// </summary>
-    public class ControlledPlayer : ControlledPed, ISaveable<JPed, Ped>
+    [SuppressMessage("ReSharper", "ExceptionNotDocumented")]
+    public class ControlledPlayer : ControlledPed
     {
         public delegate void ControlledPlayerEventHandler(object sender, EventArgs e);
 
@@ -32,24 +33,9 @@ namespace GTATest.Controllers
 
             Game.Player.Character.Weapons.RemoveAll();
             SpawnWeapons.ToList().ForEach(weapon => Inventory.Add(weapon.Key, weapon.Value));
-        }
 
-        /// <summary>
-        /// Saves this <see cref="ISaveable{T,U}"/>.
-        /// </summary>
-        public void Save()
-        {
-            Directory.CreateDirectory("GTAPI");
-            File.WriteAllText(@"GTAPI\player.json", GetModel().ToJson(Formatting.Indented));
-        }
-
-        /// <summary>
-        /// Gets the model of this ControlledPlayer.
-        /// </summary>
-        /// <returns></returns>
-        public JPed GetModel()
-        {
-            return new JPed(Entity);
+            new JInventory(Inventory).Save("inventory");
+            ToModel().Save("player");
         }
 
         /// <summary>
@@ -92,6 +78,15 @@ namespace GTATest.Controllers
             if (player.IsRidingTrain) {
                 RidingTrain?.Invoke(sender, e);
             }
+        }
+
+        /// <summary>
+        /// Gets the JSON model of this <see cref="ControlledPlayer"/>.
+        /// </summary>
+        /// <returns></returns>
+        public JPed ToModel()
+        {
+            return new JPed((Ped) Entity);
         }
     }
 }

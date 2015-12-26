@@ -10,7 +10,6 @@ namespace GTATest.Controllers
     /// </summary>
     public class ControlledEntity
     {
-
         /// <summary>
         /// Initializes an instance of the <see cref="ControlledEntity"/> class.
         /// </summary>

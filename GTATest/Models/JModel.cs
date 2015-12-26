@@ -6,13 +6,13 @@ namespace GTATest.Models
     /// <summary>
     /// Represents a JSON-serialized <see cref="Model"/>.
     /// </summary>
-    public class JModel : JSerializable<JModel, Model>
+    public class JModel
     {
         /// <summary>
         /// Initializes an instance of the <see cref="JModel"/> class.
         /// </summary>
         /// <param name="model">The model.</param>
-        public JModel(Model model) : base(model)
+        public JModel(Model model)
         {
             Hash = model.Hash;
         }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Security;
 using GTA;
 using GTA.Math;
 using GTA.Native;
@@ -11,11 +9,10 @@ using GTATest.Items;
 using GTATest.Menus;
 using GTATest.Models;
 using GTATest.Utilities;
-using Newtonsoft.Json;
 
 namespace GTATest.Storage
 {
-    public class Inventory : IInventory, ISaveable<JInventory, Inventory>
+    public class Inventory
     {
         /// <summary>
         /// Initializes an instance of the <see cref="Inventory"/> class.
@@ -28,35 +25,11 @@ namespace GTATest.Storage
         }
 
         /// <summary>
-        /// Gets the model of this Inventory.
-        /// </summary>
-        /// <returns></returns>
-        public JInventory GetModel()
-        {
-            return new JInventory(this);
-        }
-
-        /// <summary>
         /// Gets an <see cref="ItemStack"/> at the specified index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <returns></returns>
         public ItemStack this[int index] => Items[index];
-
-        /// <summary>
-        /// Saves this <see cref="Inventory"/> as a JSON file.
-        /// </summary>
-        /// <exception cref="IOException">An I/O error occurred while opening the file. </exception>
-        /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example, it is on an unmapped drive). </exception>
-        /// <exception cref="UnauthorizedAccessException"><paramref name="path" /> specified a file that is read-only.-or- This operation is not supported on the current platform.-or- <paramref name="path" /> specified a directory.-or- The caller does not have the required permission. </exception>
-        /// <exception cref="SecurityException">The caller does not have the required permission. </exception>
-        public void Save()
-        {
-            if (!Directory.Exists("GTAPI")) {
-                Directory.CreateDirectory("GTAPI");
-            }
-            File.WriteAllText(@"GTAPI\inventory.json", JsonConvert.SerializeObject(this, Formatting.Indented));
-        }
 
         #region Add
 

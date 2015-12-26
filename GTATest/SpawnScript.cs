@@ -49,8 +49,11 @@ namespace GTATest
             if (!DoDespawn)
                 return;
 
-            World.GetAllEntities().Where(entity => DespawnTypes.Contains(entity.GetType())).ToList().ForEach(entity =>
+            World.GetAllPeds().Where(ped => !ped.IsPlayer).ToList().ForEach(entity =>
             {
+                if (entity.IsInVehicle())
+                    entity.CurrentVehicle.Delete();
+
                 if (entity.IsPersistent)
                     entity.IsPersistent = false;
 
@@ -69,7 +72,6 @@ namespace GTATest
         public static Type[] DespawnTypes { get; set; } = {
             typeof(Vehicle),
             typeof(Ped),
-            typeof(Prop)
         };
 
         public static ControlledManager Manager { get; } = new ControlledManager();

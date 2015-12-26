@@ -72,7 +72,6 @@
     <Compile Include="Interactive\Props\PropHealthPack.cs" />
     <Compile Include="Interactive\Props\PropPackage.cs" />
     <Compile Include="Interactive\Props\PropPickup.cs" />
-    <Compile Include="ISaveable.cs" />
     <Compile Include="Items\ItemExample.cs" />
     <Compile Include="Items\ItemWeapon.cs" />
     <Compile Include="MenuScript.cs" />
@@ -84,9 +83,10 @@
     <Compile Include="Models\JInventory.cs" />
     <Compile Include="Models\JItem.cs" />
     <Compile Include="Models\JItemStack.cs" />
+    <Compile Include="Models\JItemWeapon.cs" />
     <Compile Include="Models\JModel.cs" />
     <Compile Include="Models\JPed.cs" />
-    <Compile Include="Models\JSerializable.cs" />
+    <Compile Include="Models\JsonModel.cs" />
     <Compile Include="Models\JVector3.cs" />
     <Compile Include="ObjectSpawner.cs" />
     <Compile Include="SpawnScript.cs" />

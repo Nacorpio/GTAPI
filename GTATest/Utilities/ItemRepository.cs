@@ -16,107 +16,107 @@ namespace GTATest.Utilities
         static ItemRepository()
         {
             Add(
-                new ItemWeapon(WeaponHash.Pistol, "pistol")
+                new ItemWeapon(WeaponHash.Pistol, 0, "pistol")
                 {
                     DisplayName="Pistol"
                 },
-                new ItemWeapon(WeaponHash.Knife, "knife")
+                new ItemWeapon(WeaponHash.Knife, 1, "knife")
                 {
                     DisplayName="Knife"
                 },
-                new ItemWeapon(WeaponHash.Flashlight, "flashlight")
+                new ItemWeapon(WeaponHash.Flashlight, 2, "flashlight")
                 {
                     DisplayName="Flashlight"
                 },
-                new ItemWeapon(WeaponHash.APPistol, "ap_pistol")
+                new ItemWeapon(WeaponHash.APPistol, 3, "ap_pistol")
                 {
                     DisplayName="AP Pistol"
                 },
-                new ItemWeapon(WeaponHash.AdvancedRifle, "advanced_rifle")
+                new ItemWeapon(WeaponHash.AdvancedRifle, 4, "advanced_rifle")
                 {
                     DisplayName="Advanced Rifle"
                 },
-                new ItemWeapon(WeaponHash.AssaultRifle, "assault_rifle")
+                new ItemWeapon(WeaponHash.AssaultRifle, 5, "assault_rifle")
                 {
                     DisplayName="Assault Rifle"
                 },
-                new ItemWeapon(WeaponHash.AssaultSMG, "assault_smg")
+                new ItemWeapon(WeaponHash.AssaultSMG, 6, "assault_smg")
                 {
                     DisplayName="Assault SMG"
                 },
-                new ItemWeapon(WeaponHash.AssaultShotgun, "assault_shotgun")
+                new ItemWeapon(WeaponHash.AssaultShotgun, 7, "assault_shotgun")
                 {
                     DisplayName="Assault Shotgun"
                 },
-                new ItemWeapon(WeaponHash.BZGas, "bz_gas")
+                new ItemWeapon(WeaponHash.BZGas, 8, "bz_gas")
                 {
                     DisplayName="BZ Gas"
                 },
-                new ItemWeapon(WeaponHash.Bat, "bat")
+                new ItemWeapon(WeaponHash.Bat, 9, "bat")
                 {
                     DisplayName="Bat"
                 },
-                new ItemWeapon(WeaponHash.Bottle, "bottle")
+                new ItemWeapon(WeaponHash.Bottle, 10, "bottle")
                 {
                     DisplayName="Bottle"
                 },
-                new ItemWeapon(WeaponHash.BullpupRifle, "bullpup_rifle")
+                new ItemWeapon(WeaponHash.BullpupRifle, 11, "bullpup_rifle")
                 {
                     DisplayName="Bullpup Rifle"
                 },
-                new ItemWeapon(WeaponHash.BullpupShotgun, "bullpup_shotgun")
+                new ItemWeapon(WeaponHash.BullpupShotgun, 12, "bullpup_shotgun")
                 {
                    DisplayName="Bullpup Shotgun"
                 },
-                new ItemWeapon(WeaponHash.CarbineRifle, "carbine_rifle")
+                new ItemWeapon(WeaponHash.CarbineRifle, 13, "carbine_rifle")
                 {
                    DisplayName="Carbine Rifle"
                 },
-                new ItemWeapon(WeaponHash.CombatMG, "combat_mg")
+                new ItemWeapon(WeaponHash.CombatMG, 14, "combat_mg")
                 {
                     DisplayName="Combat MG"
                 },
-                new ItemWeapon(WeaponHash.CombatPDW, "combat_pdw")
+                new ItemWeapon(WeaponHash.CombatPDW, 15, "combat_pdw")
                 {
                     DisplayName="Combat PDW"
                 },
-                new ItemWeapon(WeaponHash.CombatPistol, "combat_pistol")
+                new ItemWeapon(WeaponHash.CombatPistol, 16, "combat_pistol")
                 {
                     DisplayName="Combat Pistol"
                 },
-                new ItemWeapon(WeaponHash.Crowbar, "crowbar")
+                new ItemWeapon(WeaponHash.Crowbar, 17, "crowbar")
                 {
                     DisplayName="Crowbar"
                 },
-                new ItemWeapon(WeaponHash.Dagger, "dagger")
+                new ItemWeapon(WeaponHash.Dagger, 18, "dagger")
                 {
                     DisplayName="Dagger"
                 },
-                new ItemWeapon(WeaponHash.FireExtinguisher, "fire_extinguisher")
+                new ItemWeapon(WeaponHash.FireExtinguisher, 19, "fire_extinguisher")
                 {
                     DisplayName="Fire Extinguisher"
                 },
-                new ItemWeapon(WeaponHash.Firework, "firework_launcher")
+                new ItemWeapon(WeaponHash.Firework, 20, "firework_launcher")
                 {
                     DisplayName="Firework Launcher"
                 },
-                new ItemWeapon(WeaponHash.FlareGun, "flare_gun")
+                new ItemWeapon(WeaponHash.FlareGun, 21, "flare_gun")
                 {
                     DisplayName="Flare Gun"
                 },
-                new ItemWeapon(WeaponHash.GolfClub, "golf_club")
+                new ItemWeapon(WeaponHash.GolfClub, 22, "golf_club")
                 {
                     DisplayName="Golf Club"
                 },
-                new ItemWeapon(WeaponHash.Grenade, "grenade")
+                new ItemWeapon(WeaponHash.Grenade, 23, "grenade")
                 {
                     DisplayName="Grenade"
                 },
-                new ItemWeapon(WeaponHash.GrenadeLauncher, "grenade_launcher")
+                new ItemWeapon(WeaponHash.GrenadeLauncher, 24, "grenade_launcher")
                 {
                     DisplayName="Grenade Launcher"
                 },
-                new ItemWeapon(WeaponHash.GrenadeLauncherSmoke, "grenade_launcher_smoke")
+                new ItemWeapon(WeaponHash.GrenadeLauncherSmoke, 25, "grenade_launcher_smoke")
                 {
                     DisplayName="Grenade Launcher (smoke)"
                 }

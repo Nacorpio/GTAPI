@@ -6,20 +6,20 @@ namespace GTATest.Models
     /// <summary>
     /// Represents a JSON-serialized <see cref="Item"/>.
     /// </summary>
-    public class JItem : JSerializable<JItem, Item>
+    public class JItem : JsonModel<Item>
     {
         /// <summary>
         /// Initializes an instance of the <see cref="JItem"/> structure.
         /// </summary>
         /// <param name="item">The item.</param>
-        public JItem(Item item) : base(item)
+        public JItem(Item item)
         {
             Id = item.Id;
             DisplayName = item.DisplayName;
             Name = item.Name;
             Summary = item.Summary;
             IsWeapon = item.IsWeapon;
-            Model = (JModel) JModel.ToObject(item.DropModel);
+            Model = new JModel(item.DropModel);
         }
 
         /// <summary>

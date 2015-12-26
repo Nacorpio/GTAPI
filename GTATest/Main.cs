@@ -11,8 +11,6 @@ namespace GTATest
 {
     public sealed class Main : Script
     {
-        private Inventory _inventory;
-
         public Main()
         {
             Tick += OnTick;
@@ -21,12 +19,7 @@ namespace GTATest
         }
 
         private void Init()
-        {
-            var inventory = new Inventory("Inventory");
-            inventory.Add(Item.ItemExample);
-
-            _inventory = inventory;
-        }
+        {}
 
         /// <summary>
         /// Displays a help text in the upper left-hand corner.

@@ -11,8 +11,9 @@ namespace GTATest.Items
         /// Initializes an instance of the <see cref="ItemWeapon"/> class.
         /// </summary>
         /// <param name="weapon">The weapon hash.</param>
+        /// <param name="id">The unique identifier.</param>
         /// <param name="name">The name.</param>
-        public ItemWeapon(WeaponHash weapon, string name) : base(name)
+        public ItemWeapon(WeaponHash weapon, int id, string name) : base(id, name)
         {
             Weapon = weapon;
             IsWeapon = true;
@@ -30,7 +31,6 @@ namespace GTATest.Items
         /// <summary>
         /// The weapon hash of this <see cref="ItemWeapon"/>.
         /// </summary>
-        [JsonProperty("weaponHash")]
         public WeaponHash Weapon { get; }
     }
 }
