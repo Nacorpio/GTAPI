@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
 using GTA;
+using GTA.Math;
+using GTA.Native;
+using GTATest.Controllers;
 using GTATest.Storage;
 
 namespace GTATest.Interactive
@@ -24,7 +27,7 @@ namespace GTATest.Interactive
         /// <summary>
         /// Gets the original vehicle of this <see cref="InteractiveVehicle"/>.
         /// </summary>
-        public Vehicle Vehicle => (Vehicle) Entity;
+        public ControlledVehicle Vehicle => (ControlledVehicle) SpawnScript.Manager[Entity.Handle];
 
         /// <summary>
         /// Gets the inventory of this <see cref="InteractiveVehicle"/>.
@@ -40,7 +43,7 @@ namespace GTATest.Interactive
         {
             base.OnTick(sender, e);
 
-            if (!_trunk || !(Game.Player.Character.Position.DistanceTo(Vehicle.Position) > PlayerInteractionDistance))
+            if (!_trunk || !(Game.Player.Character.Position.DistanceTo(Vehicle.Vehicle.Position) > PlayerInteractionDistance))
             {
                 return;
             }
@@ -78,5 +81,22 @@ namespace GTATest.Interactive
             MenuScript.WindowManager.AddMenu(Inventory.Menu);
             _trunk = true;
         }
+
+        /// <summary>
+        /// Creates and spawns this InteractiveVehicle.
+        /// </summary>
+        /// <param name="hash">The model hash.</param>
+        /// <param name="position">The position.</param>
+        /// <returns></returns>
+        /// <exception cref="Exception">A delegate callback throws an exception.</exception>
+        public Vehicle Create(VehicleHash hash, Vector3 position)
+        {
+            var vehicle = World.CreateVehicle(hash, position);
+            Entity = vehicle;
+
+            SpawnScript.Manager.Add(this);
+            return vehicle;
+        }
+
     }
 }

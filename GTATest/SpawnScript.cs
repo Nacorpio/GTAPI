@@ -49,7 +49,7 @@ namespace GTATest
             if (!DoDespawn)
                 return;
 
-            World.GetAllPeds().Where(ped => !ped.IsPlayer).ToList().ForEach(entity =>
+            World.GetAllPeds().Where(ped => !ped.IsPlayer && !Manager.Contains(ped.Handle)).ToList().ForEach(entity =>
             {
                 if (entity.IsInVehicle())
                     entity.CurrentVehicle.Delete();

@@ -7,6 +7,16 @@ namespace GTATest.Controllers
     public abstract class ControlledVehicle : ControlledEntity
     {
         /// <summary>
+        /// Handles all events within the ControlledVehicle class.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The event arguments.</param>
+        public delegate void ControlledVehicleHandler(object sender, EventArgs e);
+
+        public event ControlledVehicleHandler AlarmActivated , Stopped , SirenActivated , Damaged , AllWheels , Burnout , Drivable , Undrivable;
+        private bool _isAlarmActive, _isStopped, _isSirenActive, _isDamaged, _isOnAllWheels, _isInBurnout, _isDrivable, _isUndrivable;
+
+        /// <summary>
         /// Initializes an instance of the ControlledEntity class.
         /// </summary>
         /// <param name="entity">The entity.</param>
@@ -19,62 +29,58 @@ namespace GTATest.Controllers
         public Vehicle Vehicle => (GTA.Vehicle) Entity;
 
         /// <summary>
-        /// Called every tick the alarm of this ControlledVehicle is active.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The event arguments.</param>
-        protected virtual void OnAlarmActive(object sender, EventArgs e)
-        {}
-
-        /// <summary>
-        /// Called every tick the sirens of this ControlledVehicle are active.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The event arguments.</param>
-        protected virtual void OnSirenActive(object sender, EventArgs e)
-        {}
-
-        /// <summary>
-        /// Called every tick this ControlledVehicle isn't moving.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The event arguments.</param>
-        protected virtual void OnStopped(object sender, EventArgs e)
-        {}
-
-        /// <summary>
-        /// Called every tick this ControlledVehicle is driving.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The event arguments.</param>
-        protected virtual void OnDriving(object sender, EventArgs e)
-        {}
-
-        /// <summary>
         /// Updates the frame of this ControlledEntity.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arguments.</param>
+        /// <exception cref="Exception">A delegate callback throws an exception.</exception>
         public override void OnTick(object sender, EventArgs e)
         {
             base.OnTick(sender, e);
 
-            if (Vehicle.AlarmActive) {
-                OnAlarmActive(sender, e);
+            if (Vehicle == null || !TrackEvents) {
+                return;
             }
 
-            if (Vehicle.IsStopped) {
-                OnStopped(sender, e);
-            } else {
-                OnDriving(sender, e);
+            if (Vehicle.AlarmActive != _isAlarmActive) {
+                _isAlarmActive = Vehicle.AlarmActive;
+                AlarmActivated?.Invoke(sender, e);
             }
 
-            if (Vehicle.SirenActive) {
-                OnSirenActive(sender, e);
+            if (Vehicle.IsStopped != _isStopped) {
+                _isStopped = Vehicle.IsStopped;
+                Stopped?.Invoke(sender, e);
+            }
+
+            if (Vehicle.SirenActive != _isSirenActive) {
+                _isSirenActive = Vehicle.SirenActive;
+                SirenActivated?.Invoke(sender, e);
+            }
+
+            if (Vehicle.IsDamaged != _isDamaged) {
+                _isDamaged = Vehicle.IsDamaged;
+                Damaged?.Invoke(sender, e);
+            }
+
+            if (Vehicle.IsOnAllWheels != _isOnAllWheels) {
+                _isOnAllWheels = Vehicle.IsOnAllWheels;
+                AllWheels?.Invoke(sender, e);
+            }
+
+            if (Vehicle.IsInBurnout() != _isInBurnout) {
+                _isInBurnout = Vehicle.IsInBurnout();
+                Burnout?.Invoke(sender, e);
+            }
+
+            if (Vehicle.IsDriveable != _isDrivable) {
+                _isDrivable = Vehicle.IsDriveable;
+                Drivable?.Invoke(sender, e);
+            }
+
+            if (!Vehicle.IsDriveable != _isUndrivable) {
+                _isUndrivable = !Vehicle.IsDriveable;
+                Undrivable?.Invoke(sender, e);
             }
         }
-
-        
-
     }
 }

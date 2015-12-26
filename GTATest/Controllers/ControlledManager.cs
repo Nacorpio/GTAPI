@@ -94,6 +94,25 @@ namespace GTATest.Controllers
         public ControlledList this[string group] => _lists[@group];
 
         /// <summary>
+        /// Creates an interactive ped at the specified position.
+        /// </summary>
+        /// <param name="hash">The model hash.</param>
+        /// <param name="position">The position.</param>
+        /// <param name="heading">The heading.</param>
+        /// <returns></returns>
+        /// <exception cref="Exception">A delegate callback throws an exception.</exception>
+        public Ped CreateInteractivePed(PedHash hash, Vector3 position, float heading)
+        {
+            var ped = World.CreatePed(hash, position, heading);
+            var control = new ControlledPed(ped);
+
+            Add(control);
+            control.Killed += (sender, args) => UI.Notify("Bone: " + args.Bone.ToString());
+
+            return ped;
+        }
+
+        /// <summary>
         /// Creates an interactive prop at the specified position.
         /// </summary>
         /// <param name="prop">The prop to spawn.</param>
@@ -124,7 +143,7 @@ namespace GTATest.Controllers
         /// <param name="position">The position.</param>
         /// <param name="teleport">Whether to teleport the player into the vehicle.</param>
         /// <exception cref="Exception">A delegate callback throws an exception.</exception>
-        public void CreateInteractiveVehicle(VehicleHash hash, Vector3 position, bool teleport)
+        public Vehicle CreateInteractiveVehicle(VehicleHash hash, Vector3 position, bool teleport)
         {
             var vehicle = World.CreateVehicle(hash, position);
             var control = new InteractiveVehicle(vehicle);
@@ -133,6 +152,8 @@ namespace GTATest.Controllers
 
             if (teleport)
                 Game.Player.Character.Task.WarpIntoVehicle(vehicle, VehicleSeat.Driver);
+
+            return vehicle;
         }
 
         /// <summary>
@@ -340,6 +361,10 @@ namespace GTATest.Controllers
                     entity = entry.Value[handle];                   
                 }
             });
+
+            if (entity == null) {
+                UI.Notify("The entity wasn't found in any group.");
+            }
 
             return entity;
         }

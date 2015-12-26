@@ -16,7 +16,9 @@ namespace GTATest
         }
 
         protected override void Init()
-        {}
+        {
+
+        }
 
         /// <summary>
         /// Displays a help text in the upper left-hand corner.
@@ -33,7 +35,7 @@ namespace GTATest
         {
             switch (eventArgs.KeyCode) {
                 case Keys.O:
-                    SpawnScript.Manager.CreateInteractiveVehicle(VehicleHash.Ingot, Game.Player.Character.Position.Around(2f), true);
+                    SpawnScript.Manager.CreateInteractivePed(PedHash.FbiSuit01, Game.Player.Character.Position.Around(2f), 0f);
                     break;
                 case Keys.I:
                     MenuScript.WindowManager.AddMenu(SpawnScript.PlayerInventory.Menu);

@@ -66,6 +66,7 @@
     <Compile Include="Controllers\ControlledVehicle.cs" />
     <Compile Include="Crafting\Recipe.cs" />
     <Compile Include="Interactive\InteractiveEntity.cs" />
+    <Compile Include="Interactive\InteractivePed.cs" />
     <Compile Include="Interactive\InteractiveProp.cs" />
     <Compile Include="Interactive\InteractiveVehicle.cs" />
     <Compile Include="EnvironmentScript.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Interactive\Props\PropPackage.cs" />
     <Compile Include="Interactive\Props\PropPickup.cs" />
     <Compile Include="Items\ItemWeapon.cs" />
+    <Compile Include="ITickable.cs" />
     <Compile Include="MenuScript.cs" />
     <Compile Include="Menus\InventoryMenu.cs" />
     <Compile Include="Menus\InventoryWeaponsMenu.cs" />

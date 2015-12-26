@@ -9,15 +9,71 @@ namespace GTATest.Controllers
     public class ControlledPed : ControlledEntity
     {
         /// <summary>
+        /// Represents data which is passed through when a <see cref="ControlledPed"/> has been killed.
+        /// </summary>
+        public class PedKilledEventArgs : EventArgs
+        {
+            /// <summary>
+            /// Represents a type of kill.
+            /// </summary>
+            public enum KillType
+            {
+                TakeDown,
+                Stealth,
+                Other
+            }
+
+            /// <summary>
+            /// Initializes an instance of the <see cref="PedKilledEventArgs"/> class.
+            /// </summary>
+            /// <param name="killer">The killer.</param>
+            /// <param name="bone">The bone.</param>
+            /// <param name="type">The type of kill.</param>
+            public PedKilledEventArgs(Entity killer, Bone bone, KillType type)
+            {
+                Killer = killer;
+                Bone = bone;
+                Type = type;
+            }
+
+            /// <summary>
+            /// Gets the killer of this <see cref="PedKilledEventArgs"/>.
+            /// </summary>
+            public Entity Killer { get; }
+
+            /// <summary>
+            /// Gets the bone that was last damaged of this <see cref="PedKilledEventArgs"/>.
+            /// </summary>
+            public Bone Bone { get; }
+
+            /// <summary>
+            /// Gets the type of kill of this <see cref="PedKilledEventArgs"/>.
+            /// </summary>
+            public KillType Type { get; }
+        }
+
+        /// <summary>
         /// Handles all the events of the <see cref="ControlledPed"/> class.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arguments.</param>
         public delegate void ControlledPedEventHandler(object sender, EventArgs e);
 
+        /// <summary>
+        /// Handles all the death events of the <see cref="ControlledPed"/> class.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public delegate void ControlledPedKilledEventHandler(object sender, PedKilledEventArgs e);
+
         private bool _isInVehicle, _isInCombat, _isDiving, _isInMeleeCombat, _isClimbing, _isFalling, _isDucking, _isSprinting, _isShooting, _isWalking, _isIdle, _isProne, _isAimingFromCover, _isInTrain, _isReloading, _isGettingUp;
 
         #region Events
+
+        /// <summary>
+        /// Raised when this ControlledPed 
+        /// </summary>
+        public event ControlledPedKilledEventHandler Killed;
 
         /// <summary>
         /// Raised when this ControlledPed has entered a Vehicle.
@@ -122,9 +178,35 @@ namespace GTATest.Controllers
         /// <param name="entity">The entity.</param>
         public ControlledPed(Entity entity) : base(entity)
         {
-            Inventory = new Inventory("Inventory") {
+            Inventory = new Inventory("Inventory")
+            {
                 Owner = Entity
             };
+            Dead += OnDead;
+        }
+
+        private void OnDead(object sender, EventArgs eventArgs)
+        {
+            var killer = GetPreviousKiller();
+            if (killer == null)
+            {
+                return;
+            }
+
+            var type = PedKilledEventArgs.KillType.Other;
+            if (Ped.WasKilledByStealth)
+            {
+                type = PedKilledEventArgs.KillType.Stealth;
+            }
+            else if (Ped.WasKilledByTakedown)
+            {
+                type = PedKilledEventArgs.KillType.TakeDown;
+            }
+
+            var bone = new OutputArgument();
+            Function.Call<bool>(Hash.GET_PED_LAST_DAMAGE_BONE, Ped, bone);
+
+            Killed?.Invoke(sender, new PedKilledEventArgs(killer, (Bone) bone.GetResult<int>(), type));
         }
 
         /// <summary>
@@ -149,6 +231,35 @@ namespace GTATest.Controllers
         public Ped Ped => (Ped) Entity;
 
         #region Native Functions
+
+        /// <summary>
+        /// Gets the previous killer of this <see cref="ControlledPed"/>.
+        /// </summary>
+        /// <returns></returns>
+        public Entity GetPreviousKiller()
+        {
+            return Function.Call<Entity>(Hash._GET_PED_KILLER, Ped);
+        }
+
+        /// <summary>
+        /// Sets the specified combat float to the specified value.
+        /// </summary>
+        /// <param name="par">The parameter.</param>
+        /// <param name="value">The value.</param>
+        public void SetCombatFloat(int par, float value)
+        {
+            Function.Call(Hash.SET_COMBAT_FLOAT, Ped, par, value);
+        }
+
+        /// <summary>
+        /// Gets the specified combat float value.
+        /// </summary>
+        /// <param name="par">The parameter.</param>
+        /// <returns></returns>
+        public float GetCombatFloat(int par)
+        {
+            return Function.Call<float>(Hash.GET_COMBAT_FLOAT, Ped, par);
+        }
 
         /// <summary>
         /// Sets whether this <see cref="ControlledPed"/> has bound ankles.
