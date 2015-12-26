@@ -34,8 +34,15 @@ namespace GTATest.Controllers
             Game.Player.Character.Weapons.RemoveAll();
             SpawnWeapons.ToList().ForEach(weapon => Inventory.Add(weapon.Key, weapon.Value));
 
-            new JInventory(Inventory).Save("inventory");
+            Inventory.ToModel().Save("inventory");
             ToModel().Save("player");
+
+            Reload += OnReload;
+        }
+
+        private void OnReload(object sender, EventArgs eventArgs)
+        {
+            UI.Notify("Reloading!");
         }
 
         /// <summary>

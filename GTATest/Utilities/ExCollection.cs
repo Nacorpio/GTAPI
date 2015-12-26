@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,7 +8,7 @@ namespace GTATest.Utilities
     /// <summary>
     /// Provides a collection of useful LINQ utilities for managing a <see cref="Collection{T}"/>.
     /// </summary>
-    public static class ExtendedCollection
+    public static class ExCollection
     {
         /// <summary>
         /// Performs the specified <see cref="Action"/> on each element in the specified <see cref="IEnumerable"/>.

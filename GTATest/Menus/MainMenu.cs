@@ -33,9 +33,6 @@ namespace GTATest.Menus
             _tick1 = new TickBox("Blackout") {IsChecked = true};
             _tick1.OnPress += (sender, args) => World.SetBlackout(_tick1.IsChecked);
 
-            _tick2 = new TickBox("Show Models") {IsChecked = Main.ShowModels};
-            _tick2.OnPress += (sender, args) => Main.ShowModels = _tick2.IsChecked;
-
             _tick3 = new TickBox("Despawn Entities") {IsChecked = SpawnScript.DoDespawn};
             _tick3.OnPress += (sender, args) => SpawnScript.DoDespawn = _tick3.IsChecked;
         }
@@ -59,7 +56,6 @@ namespace GTATest.Menus
             AddMenuItem(_div3);
 
             AddMenuItem(_tick1);
-            AddMenuItem(_tick2);
             AddMenuItem(_tick3);
         }
     }

@@ -19,6 +19,16 @@ namespace GTATest.Models
         }
 
         /// <summary>
+        /// Deserializes the specified JSON-formatted string, and converts it to a <see cref="JItemStack"/>.
+        /// </summary>
+        /// <param name="json">The JSON string.</param>
+        /// <returns></returns>
+        public static JItemStack ToObject(string json)
+        {
+            return (JItemStack) JsonConvert.DeserializeObject(json);
+        }
+
+        /// <summary>
         /// Gets the unique item identifier for this <see cref="JItemStack"/>.
         /// </summary>
         [JsonProperty("itemId")]

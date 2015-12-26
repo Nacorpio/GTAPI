@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using GTA.Native;
 using GTATest.Items;
+using Newtonsoft.Json;
 
 namespace GTATest.Utilities
 {
+    [SuppressMessage("ReSharper", "ExceptionNotDocumented")]
     public static class ItemRepository
     {
         private readonly static Dictionary<int, Item> Items = new Dictionary<int, Item>();
@@ -121,6 +124,19 @@ namespace GTATest.Utilities
                     DisplayName="Grenade Launcher (smoke)"
                 }
             );
+            Save("items");
+        }
+
+        /// <summary>
+        /// Saves this ItemRepository inside a file at the specified path.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        public static void Save(string name)
+        {
+            if (!Directory.Exists("GTAPI")) {
+                Directory.CreateDirectory("GTAPI");
+            }
+            File.WriteAllText($"GTAPI\\{name}.json", JsonConvert.SerializeObject(Items.Values, Formatting.Indented));
         }
 
         /// <summary>
@@ -141,7 +157,7 @@ namespace GTATest.Utilities
             if (Items.ContainsValue(item)) {
                 return;
             }
-            Items.Add(Items.Count, item);
+            Items.Add(item.Id, item);
         }
 
         /// <summary>

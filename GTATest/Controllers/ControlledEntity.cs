@@ -11,6 +11,17 @@ namespace GTATest.Controllers
     public class ControlledEntity
     {
         /// <summary>
+        /// Handles all the events of the <see cref="ControlledEntity"/> class.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The event arguments.</param>
+        public delegate void ControlledEntityEventHandler(object sender, EventArgs e);
+
+        private bool _isAlive, _isDead, _isInAir, _isInWater;
+
+        public event ControlledEntityEventHandler Alive, Dead, InAir, InWater;
+
+        /// <summary>
         /// Initializes an instance of the <see cref="ControlledEntity"/> class.
         /// </summary>
         public ControlledEntity()
@@ -125,38 +136,6 @@ namespace GTATest.Controllers
         #region Virtual tick methods
 
         /// <summary>
-        /// Called every tick this <see cref="ControlledEntity"/> is in water.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The event arguments.</param>
-        protected virtual void OnInWater(object sender, EventArgs e)
-        {}
-
-        /// <summary>
-        /// Called every tick this <see cref="ControlledEntity"/> is airborne. 
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The event arguments.</param>
-        protected virtual void OnInAir(object sender, EventArgs e)
-        {}
-
-        /// <summary>
-        /// Called every tick this <see cref="ControlledEntity"/> is dead.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The event arguments.</param>
-        protected virtual void OnDead(object sender, EventArgs e)
-        {}
-
-        /// <summary>
-        /// Called every tick this <see cref="ControlledEntity"/> is alive.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The event arguments.</param>
-        protected virtual void OnAlive(object sender, EventArgs e)
-        {}
-
-        /// <summary>
         /// Called every tick this <see cref="ControlledEntity"/> is touching a Player.
         /// </summary>
         /// <param name="sender">The sender.</param>
@@ -191,28 +170,31 @@ namespace GTATest.Controllers
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arguments.</param>
+        /// <exception cref="Exception">A delegate callback throws an exception.</exception>
         public virtual void OnTick(object sender, EventArgs e)
         {
             if (Entity == null || !TrackEvents) {
                 return;
             }
 
-            if (Entity.IsAlive) {
-                OnAlive(sender, e);
-            } else {
-                OnDead(sender, e);
+            if (Entity.IsDead != _isDead) {
+                _isDead = Entity.IsDead;
+                Dead?.Invoke(sender, e);
             }
 
-            if (Entity.IsInAir) {
-                OnInAir(sender, e);
+            if (Entity.IsAlive != _isAlive) {
+                _isAlive = Entity.IsAlive;
+                Alive?.Invoke(sender, e);
             }
 
-            if (Entity.IsInWater) {
-                OnInWater(sender, e);
+            if (Entity.IsInAir != _isInAir) {
+                _isInAir = Entity.IsInAir;
+                InAir?.Invoke(sender, e);
             }
 
-            if (!Game.Player.IsAlive) {
-                return;
+            if (Entity.IsInWater != _isInWater) {
+                _isInWater = Entity.IsInWater;
+                InWater?.Invoke(sender, e);
             }
 
             if (Entity.IsTouching(Game.Player.Character)) {

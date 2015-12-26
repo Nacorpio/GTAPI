@@ -9,18 +9,20 @@ namespace GTATest.Crafting
     public class Recipe
     {
         /// <summary>
-        /// Initializes an instance of the Recipe class.
+        /// Initializes an instance of the <see cref="Recipe"/> class.
         /// </summary>
+        /// <param name="id">The id.</param>
         /// <param name="input">The input.</param>
         /// <param name="output">The output.</param>
-        public Recipe(ItemStack[] input, ItemStack[] output)
+        public Recipe(int id, ItemStack[] input, ItemStack[] output)
         {
+            Id = id;
             Input = input;
             Output = output;
         }
 
         /// <summary>
-        /// Determines whether the specified input is valid to craft this Recipe.
+        /// Determines whether the specified input is valid to craft this <see cref="Recipe"/>.
         /// </summary>
         /// <param name="input">The input.</param>
         /// <returns></returns>
@@ -30,12 +32,17 @@ namespace GTATest.Crafting
         }
 
         /// <summary>
-        /// Gets the input that is needed to craft this Recipe.
+        /// Gets the unique identifier of this <see cref="Recipe"/>.
+        /// </summary>
+        public int Id { get; }
+
+        /// <summary>
+        /// Gets the input that is needed to craft this <see cref="Recipe"/>.
         /// </summary>
         public ItemStack[] Input { get; }
 
         /// <summary>
-        /// Gets the output, which is received when crafting this Recipe.
+        /// Gets the output, which is received when crafting this <see cref="Recipe"/>.
         /// </summary>
         public ItemStack[] Output { get; }
     }

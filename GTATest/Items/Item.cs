@@ -4,14 +4,11 @@ using GTA.Math;
 using GTATest.Interactive;
 using GTATest.Interactive.Props;
 using GTATest.Utilities;
-using Newtonsoft.Json;
 
 namespace GTATest.Items
 {
     public class Item
     {
-        public static readonly ItemExample ItemExample = new ItemExample();
-
         public delegate void ItemEventHandler(object sender, EventArgs e);
 
         /// <summary>

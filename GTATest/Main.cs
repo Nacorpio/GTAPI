@@ -4,12 +4,11 @@ using System.Linq;
 using System.Windows.Forms;
 using GTA;
 using GTA.Native;
-using GTATest.Items;
-using GTATest.Storage;
+using GTATest.Utilities;
 
 namespace GTATest
 {
-    public sealed class Main : Script
+    public sealed class Main : ExScript
     {
         public Main()
         {
@@ -18,7 +17,7 @@ namespace GTATest
             Init();
         }
 
-        private void Init()
+        protected override void Init()
         {}
 
         /// <summary>
@@ -44,50 +43,7 @@ namespace GTATest
             }
         }
 
-        private readonly Dictionary<int, UIText> _texts = new Dictionary<int, UIText>();
-        private float _range = 5f;
-
-        public static bool ShowModels = false;
-
-        private void OnTick(object sender, EventArgs eventArgs)
-        {
-            if (!ShowModels)
-                return;
-
-            var props = World.GetNearbyProps(Game.Player.Character.Position, _range).Where(prop => !prop.IsAttachedTo(Game.Player.Character)).ToList();
-            props.ForEach(prop =>
-            {
-                if (_texts.ContainsKey(prop.Handle))
-                    return;
-
-                _texts.Add(prop.Handle, new UIText($"Model: ", UI.WorldToScreen(prop.Position), 0.19f));
-            });
-
-            _texts.ToList().ForEach(text =>
-            {
-                var prop = new Prop(text.Key);
-                var distance = prop.Position.DistanceTo(Game.Player.Character.Position);
-
-                if (distance > _range) {
-                    _texts.Remove(prop.Handle);
-                    return;
-                }
-
-                text.Value.Caption = $"Model: ~g~{prop.Model.Hash}~w~\n" +
-                                     $"Distance: ~g~{distance}";
-
-                text.Value.Position = UI.WorldToScreen(prop.Position);
-                text.Value.Draw();
-            });
-
-            if (Game.Player.IsTargettingAnything) {
-                var prop = Game.Player.GetTargetedEntity() as Prop;
-                var msg = $"Model: ~g~{prop?.Model.Hash}~w~\n" +
-                          $"Position: ~g~{prop?.Position}";
-
-                UI.Notify(msg);
-                Clipboard.SetText(msg);
-            }
-        }
+        protected override void OnTick(object sender, EventArgs eventArgs)
+        {}
     }
 }

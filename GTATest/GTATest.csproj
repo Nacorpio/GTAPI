@@ -60,6 +60,7 @@
     <Compile Include="Controllers\ControlledList.cs" />
     <Compile Include="Controllers\ControlledManager.cs" />
     <Compile Include="Controllers\ControlledPed.cs" />
+    <Compile Include="Controllers\ControlledPickup.cs" />
     <Compile Include="Controllers\ControlledPlayer.cs" />
     <Compile Include="Controllers\ControlledProp.cs" />
     <Compile Include="Controllers\ControlledVehicle.cs" />
@@ -72,7 +73,6 @@
     <Compile Include="Interactive\Props\PropHealthPack.cs" />
     <Compile Include="Interactive\Props\PropPackage.cs" />
     <Compile Include="Interactive\Props\PropPickup.cs" />
-    <Compile Include="Items\ItemExample.cs" />
     <Compile Include="Items\ItemWeapon.cs" />
     <Compile Include="MenuScript.cs" />
     <Compile Include="Menus\InventoryMenu.cs" />
@@ -96,7 +96,8 @@
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage\Inventory.cs" />
-    <Compile Include="Utilities\ExtendedCollection.cs" />
+    <Compile Include="Utilities\ExScript.cs" />
+    <Compile Include="Utilities\ExCollection.cs" />
     <Compile Include="Utilities\IPL.cs" />
     <Compile Include="Utilities\IPLRepository.cs" />
     <Compile Include="Utilities\ItemRepository.cs" />
