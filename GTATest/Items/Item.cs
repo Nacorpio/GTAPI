@@ -16,13 +16,13 @@ namespace GTATest.Items
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="name">The name.</param>
-        protected Item(int id, string name)
+        public Item(int id, string name)
         {
             Id = id;
             Name = name;
         }
 
-        protected Item(string name) : this(ItemRepository.Count, name)
+        public Item(string name) : this(ItemRepository.Count, name)
         {}
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace GTATest.Items
         /// <summary>
         /// Gets or sets the summary of this Item.
         /// </summary>
-        public string Summary { get; set; }
+        public string Summary { get; set; } = "No summary available for this item.";
 
         /// <summary>
         /// Gets the display name of this Item.

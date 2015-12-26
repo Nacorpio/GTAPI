@@ -96,6 +96,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage\Inventory.cs" />
+    <Compile Include="Storage\PlayerInventory.cs" />
     <Compile Include="Utilities\ExScript.cs" />
     <Compile Include="Utilities\ExCollection.cs" />
     <Compile Include="Utilities\IPL.cs" />

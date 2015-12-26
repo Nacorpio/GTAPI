@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
 using GTA;
 using GTA.Native;
@@ -18,7 +17,8 @@ namespace GTATest.Controllers
     {
         public delegate void ControlledPlayerEventHandler(object sender, EventArgs e);
 
-        public event ControlledPlayerEventHandler Climbing, Aiming, RidingTrain;
+        private bool _isClimbing, _isAiming, _isRidingTrain, _isTargettingAnything;
+        public event ControlledPlayerEventHandler Climbing, Aiming, RidingTrain, Target;
 
         /// <summary>
         /// Initializes an instance of the <see cref="ControlledPlayer"/> class.
@@ -27,22 +27,13 @@ namespace GTATest.Controllers
         {
             TrackEvents = true;
 
-            Inventory = new Inventory("PlayerInventory") {
-                Owner = Game.Player.Character
-            };
+            Inventory = new PlayerInventory();
 
             Game.Player.Character.Weapons.RemoveAll();
             SpawnWeapons.ToList().ForEach(weapon => Inventory.Add(weapon.Key, weapon.Value));
 
             Inventory.ToModel().Save("inventory");
             ToModel().Save("player");
-
-            Reload += OnReload;
-        }
-
-        private void OnReload(object sender, EventArgs eventArgs)
-        {
-            UI.Notify("Reloading!");
         }
 
         /// <summary>
@@ -57,7 +48,7 @@ namespace GTATest.Controllers
         /// <summary>
         /// Gets the inventory of this <see cref="ControlledPlayer"/>.
         /// </summary>
-        public Inventory Inventory { get; }
+        public new PlayerInventory Inventory { get; }
 
         /// <summary>
         /// Updates the frame of this <see cref="ControlledPlayer"/>.
@@ -74,15 +65,23 @@ namespace GTATest.Controllers
 
             var player = Game.Player;
 
-            if (player.IsClimbing) {
+            if (player.IsTargettingAnything != _isTargettingAnything) {
+                _isTargettingAnything = player.IsTargettingAnything;
+                Target?.Invoke(sender, e);
+            }
+
+            if (player.IsClimbing != _isClimbing) {
+                _isClimbing = player.IsClimbing;
                 Climbing?.Invoke(sender, e);
             }
 
-            if (player.IsAiming) {
+            if (player.IsAiming != _isAiming) {
+                _isAiming = player.IsAiming;
                 Aiming?.Invoke(sender, e);
             }
 
-            if (player.IsRidingTrain) {
+            if (player.IsRidingTrain != _isRidingTrain) {
+                _isRidingTrain = player.IsRidingTrain;
                 RidingTrain?.Invoke(sender, e);
             }
         }

@@ -2,6 +2,7 @@
 using GTA;
 using GTA.Native;
 using GTATest.Models;
+using GTATest.Storage;
 
 namespace GTATest.Controllers
 {
@@ -15,6 +16,8 @@ namespace GTATest.Controllers
         public delegate void ControlledPedEventHandler(object sender, EventArgs e);
 
         private bool _isInVehicle, _isInCombat, _isDiving, _isInMeleeCombat, _isClimbing, _isFalling, _isDucking, _isSprinting, _isShooting, _isWalking, _isIdle, _isProne, _isAimingFromCover, _isInTrain, _isReloading, _isGettingUp;
+
+        #region Events
 
         /// <summary>
         /// Raised when this ControlledPed has entered a Vehicle.
@@ -111,12 +114,17 @@ namespace GTATest.Controllers
         /// </summary>
         public event ControlledPedEventHandler GetUp;
 
+        #endregion
+
         /// <summary>
         /// Initializes an instance of the <see cref="ControlledPed"/> class.
         /// </summary>
         /// <param name="entity">The entity.</param>
         public ControlledPed(Entity entity) : base(entity)
         {
+            Inventory = new Inventory("Inventory") {
+                Owner = Entity
+            };
         }
 
         /// <summary>
@@ -129,6 +137,11 @@ namespace GTATest.Controllers
                 return new JPed((Ped) Entity);
             return null;
         }
+
+        /// <summary>
+        /// Gets the inventory of this <see cref="ControlledPed"/>.
+        /// </summary>
+        public Inventory Inventory { get; protected set; }
 
         /// <summary>
         /// Gets the <see cref="Ped"/> that has been controlled originally.

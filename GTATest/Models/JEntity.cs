@@ -33,9 +33,17 @@ namespace GTATest.Models
         }
 
         /// <summary>
+        /// Creates an instance of this <see cref="JsonModel{T}"/>.
+        /// </summary>
+        public override Entity Create()
+        {
+            return null;
+        }
+
+        /// <summary>
         /// Gets the position of this <see cref="JEntity"/>.
         /// </summary>
-        [JsonProperty("position")]
+        [JsonProperty("position", Order=0)]
         public JVector3 Position { get; }
 
         /// <summary>
@@ -125,7 +133,7 @@ namespace GTATest.Models
         /// <summary>
         /// Gets the rotation of this <see cref="JEntity"/>.
         /// </summary>
-        [JsonProperty("rotation")]
+        [JsonProperty("rotation", Order=1)]
         public JVector3 Rotation { get; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using GTATest.Items;
+using GTATest.Utilities;
 using Newtonsoft.Json;
 
 namespace GTATest.Models
@@ -19,15 +20,23 @@ namespace GTATest.Models
         }
 
         /// <summary>
+        /// Creates an instance of this <see cref="JsonModel{T}"/>.
+        /// </summary>
+        public override ItemStack Create()
+        {
+            return new ItemStack(ItemRepository.Get(ItemId), Size);
+        }
+
+        /// <summary>
         /// Gets the unique item identifier for this <see cref="JItemStack"/>.
         /// </summary>
-        [JsonProperty("itemId")]
+        [JsonProperty("itemId", Order=0)]
         public int ItemId { get; }
 
         /// <summary>
         /// Gets the size of this <see cref="JItemStack"/>.
         /// </summary>
-        [JsonProperty("size")]
+        [JsonProperty("size", Order=1)]
         public int Size { get; }
     }
 }

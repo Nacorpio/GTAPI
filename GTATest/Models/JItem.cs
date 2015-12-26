@@ -23,39 +23,47 @@ namespace GTATest.Models
         }
 
         /// <summary>
-        /// Gets the unique identifier of this <see cref="JItem"/>.
+        /// Creates an instance of this <see cref="JsonModel{T}"/>.
         /// </summary>
-        [JsonProperty("id")]
-        public int Id { get; }
+        public override Item Create()
+        {
+            return new Item(Id, Name);
+        }
 
         /// <summary>
-        /// Gets the display name of this <see cref="JItem"/>.
+        /// Gets the unique identifier of this <see cref="JItem"/>.
         /// </summary>
-        [JsonProperty("displayName")]
-        public string DisplayName { get; }
+        [JsonProperty("id", Order=0)]
+        public int Id { get; }
 
         /// <summary>
         /// Gets the name of this <see cref="JItem"/>.
         /// </summary>
-        [JsonProperty("name")]
+        [JsonProperty("name", Order=1)]
         public string Name { get; }
+
+        /// <summary>
+        /// Gets the display name of this <see cref="JItem"/>.
+        /// </summary>
+        [JsonProperty("displayName", Order=2)]
+        public string DisplayName { get; }
 
         /// <summary>
         /// Gets the summary of this <see cref="JItem"/>.
         /// </summary>
-        [JsonProperty("summary")]
+        [JsonProperty("summary", Order=3)]
         public string Summary { get; }
 
         /// <summary>
         /// Gets whether this <see cref="JItem"/> is a weapon.
         /// </summary>
-        [JsonProperty("isWeapon")]
+        [JsonProperty("isWeapon", Order=4)]
         public bool IsWeapon { get; }
 
         /// <summary>
         /// Gets the model that is shown when dropping this <see cref="JItem"/>.
         /// </summary>
-        [JsonProperty("model")]
+        [JsonProperty("model", Order=5)]
         public JModel Model { get; }
     }
 }

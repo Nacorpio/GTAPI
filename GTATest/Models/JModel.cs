@@ -6,7 +6,7 @@ namespace GTATest.Models
     /// <summary>
     /// Represents a JSON-serialized <see cref="Model"/>.
     /// </summary>
-    public class JModel
+    public class JModel : JsonModel<Model>
     {
         /// <summary>
         /// Initializes an instance of the <see cref="JModel"/> class.
@@ -15,6 +15,14 @@ namespace GTATest.Models
         public JModel(Model model)
         {
             Hash = model.Hash;
+        }
+
+        /// <summary>
+        /// Creates an instance of this <see cref="JsonModel{T}"/>.
+        /// </summary>
+        public override Model Create()
+        {
+            return new Model(Hash);
         }
 
         /// <summary>

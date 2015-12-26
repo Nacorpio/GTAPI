@@ -19,6 +19,14 @@ namespace GTATest.Models
         }
 
         /// <summary>
+        /// Creates an instance of this <see cref="JsonModel{T}"/>.
+        /// </summary>
+        public override Item Create()
+        {
+            return new ItemWeapon(Hash, Id, Name);
+        }
+
+        /// <summary>
         /// Gets the hash of this <see cref="JItemWeapon"/>.
         /// </summary>
         [JsonProperty("hash")]

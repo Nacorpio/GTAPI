@@ -21,15 +21,25 @@ namespace GTATest.Models
         }
 
         /// <summary>
+        /// Creates an instance of this <see cref="JsonModel{T}"/>.
+        /// </summary>
+        public override Inventory Create()
+        {
+            var inventory = new Inventory(Name);
+            inventory.Items.AddRange(Items.Select(item => item.Create()));
+            return inventory;
+        }
+
+        /// <summary>
         /// Gets the name of this <see cref="JInventory"/>.
         /// </summary>
-        [JsonProperty("name")]
+        [JsonProperty("name", Order=0)]
         public string Name { get; }
 
         /// <summary>
         /// Gets the items of this <see cref="JInventory"/>.
         /// </summary>
-        [JsonProperty("items")]
+        [JsonProperty("items", Order=1)]
         public IEnumerable<JItemStack> Items { get; }
     }
 }
