@@ -56,7 +56,7 @@ namespace GTATest.Controllers
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arguments.</param>
         /// <exception cref="Exception">A delegate callback throws an exception.</exception>
-        public override void OnTick(object sender, EventArgs e)
+        protected override void OnTick(object sender, TickEventArgs e)
         {
             base.OnTick(sender, e);
 

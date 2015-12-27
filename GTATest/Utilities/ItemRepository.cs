@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using GTA.Native;
 using GTATest.Items;
 using Newtonsoft.Json;
@@ -11,7 +12,7 @@ namespace GTATest.Utilities
     [SuppressMessage("ReSharper", "ExceptionNotDocumented")]
     public static class ItemRepository
     {
-        private readonly static Dictionary<int, Item> Items = new Dictionary<int, Item>();
+        private readonly static List<Item> Items = new List<Item>();
 
         /// <summary>
         /// Initializes a static instance of the <see cref="ItemRepository"/> class.
@@ -136,7 +137,7 @@ namespace GTATest.Utilities
             if (!Directory.Exists("GTAPI")) {
                 Directory.CreateDirectory("GTAPI");
             }
-            File.WriteAllText($"GTAPI\\{name}.json", JsonConvert.SerializeObject(Items.Values, Formatting.Indented));
+            File.WriteAllText($"GTAPI\\{name}.json", JsonConvert.SerializeObject(Items, Formatting.Indented));
         }
 
         /// <summary>
@@ -149,15 +150,25 @@ namespace GTATest.Utilities
         }
 
         /// <summary>
-        /// Adds an Item to this <see cref="ItemRepository"/>, with the assigned identifier.
+        /// Adds an Item to this <see cref="ItemRepository"/>.
         /// </summary>
         /// <param name="item">The item.</param>
         public static void Add(Item item)
         {
-            if (Items.ContainsValue(item)) {
+            if (Items.Any(i => i.Id == item.Id)) {
                 return;
             }
-            Items.Add(item.Id, item);
+            Items.Add(item);
+        }
+
+        /// <summary>
+        /// Gets an Item with the specified identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier.</param>
+        /// <returns></returns>
+        public static Item Get(int id)
+        {
+            return Items.First(item => item.Id == id);
         }
 
         /// <summary>
@@ -167,7 +178,7 @@ namespace GTATest.Utilities
         /// <returns></returns>
         public static Item Get(string name)
         {
-            return Items.First(item => item.Value.Name.Contains(name)).Value;
+            return Items.First(item => item.Name.Contains(name));
         }
 
         /// <summary>
@@ -177,16 +188,9 @@ namespace GTATest.Utilities
         /// <returns></returns>
         public static ItemWeapon Get(WeaponHash hash)
         {
-            var exp = Items.Values.Where(item => item.IsWeapon).Select(weapon => (ItemWeapon) weapon);
+            var exp = Items.Where(item => item.IsWeapon).Select(weapon => (ItemWeapon) weapon);
             return exp.First(w => w.Weapon == hash);
         }
-
-        /// <summary>
-        /// Gets an Item with the specified identifier.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
-        public static Item Get(int id) => Items[id];
 
         /// <summary>
         /// Gets the amount of items within this <see cref="ItemRepository"/>.

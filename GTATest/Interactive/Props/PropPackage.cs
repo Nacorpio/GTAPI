@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows.Forms;
 using GTA;
 using GTATest.Items;
@@ -15,6 +14,7 @@ namespace GTATest.Interactive.Props
         /// <param name="stacks">The item stacks.</param>
         public PropPackage(params ItemStack[] stacks) : base(-280273712)
         {
+            KeyDown += OnKeyDownEvent;
             Inventory = new Inventory("Inventory");
             stacks.ToList().ForEach(stack => Inventory.Add(stack));
         }
@@ -24,9 +24,8 @@ namespace GTATest.Interactive.Props
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arguments.</param>
-        public override void KeyDown(object sender, KeyEventArgs e)
+        private void OnKeyDownEvent(object sender, KeyEventArgs e)
         {
-            base.KeyDown(sender, e);
             switch (e.KeyCode) {
                 case Keys.E:
                     Destroy();
@@ -39,9 +38,9 @@ namespace GTATest.Interactive.Props
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arguments.</param>
-        protected override void OnPlayerNearby(object sender, EventArgs e)
+        protected override void OnPlayerNearbyTick(object sender, TickEventArgs e)
         {
-            base.OnPlayerNearby(sender, e);
+            base.OnPlayerNearbyTick(sender, e);
             if (!Game.Player.Character.IsInVehicle())
             {
                 Main.DisplayHelpText("Press ~INPUT_CONTEXT~ to pickup loot");

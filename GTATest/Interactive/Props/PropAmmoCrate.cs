@@ -23,9 +23,8 @@ namespace GTATest.Interactive.Props
         /// <summary>
         /// Picks up the content of this PropAmmoCrate.
         /// </summary>
-        /// <param name="o">The sender.</param>
-        /// <param name="eventArgs">The event arguments.</param>
-        protected override void Pickup(object o, EventArgs eventArgs)
+        /// <param name="tick">The tick.</param>
+        protected override void Pickup(int tick)
         {
             var rand = new Random(Environment.TickCount);
             var wcont = Weapons[rand.Next(0, Weapons.Length - 1)];

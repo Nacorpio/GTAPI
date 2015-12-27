@@ -6,7 +6,7 @@ namespace GTATest.Controllers
     /// <summary>
     /// Represents a controlled <see cref="Pickup"/>.
     /// </summary>
-    public class ControlledPickup
+    public class ControlledPickup : Tickable
     {
         /// <summary>
         /// Handles all the events of the <see cref="ControlledPickup"/> class.
@@ -25,32 +25,16 @@ namespace GTATest.Controllers
         /// <summary>
         /// Initializes an instance of the <see cref="ControlledPickup"/> class.
         /// </summary>
-        public ControlledPickup()
-        {}
-
-        /// <summary>
-        /// Initializes an instance of the <see cref="ControlledPickup"/> class.
-        /// </summary>
         /// <param name="pickup">The pickup instance.</param>
-        public ControlledPickup(Pickup pickup)
+        public ControlledPickup(Pickup pickup) : base(pickup)
         {
-            Object = pickup;
+            Tick += OnTick;
         }
-
-        /// <summary>
-        /// Gets the pickup object of this <see cref="ControlledPickup"/>.
-        /// </summary>
-        public Pickup Object { get; }
 
         /// <summary>
         /// Gets whether this <see cref="ControlledPickup"/> is nearby a Player.
         /// </summary>
         public bool IsPlayerNearby { get; private set; }
-
-        /// <summary>
-        /// Gets the distance required for a Player to interact with this <see cref="ControlledPickup"/>.
-        /// </summary>
-        public float PlayerInteractionDistance { get; protected set; }
 
         /// <summary>
         /// Called every tick when this <see cref="ControlledPickup"/> is nearby a Player.
@@ -67,7 +51,7 @@ namespace GTATest.Controllers
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arguments.</param>
-        public virtual void OnTick(object sender, EventArgs e)
+        protected virtual void OnTick(object sender, TickEventArgs e)
         {
             if (Pickup == null) {
                 return;

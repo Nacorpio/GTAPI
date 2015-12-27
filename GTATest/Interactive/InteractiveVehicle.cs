@@ -10,7 +10,7 @@ namespace GTATest.Interactive
 {
     public class InteractiveVehicle : InteractiveEntity
     {
-        private bool _trunk = false;
+        private bool _trunk;
 
         /// <summary>
         /// Initializes an instance of the <see cref="InteractiveVehicle"/> class.
@@ -18,8 +18,10 @@ namespace GTATest.Interactive
         /// <param name="vehicle">The vehicle.</param>
         public InteractiveVehicle(Vehicle vehicle) : base(vehicle)
         {
+            PlayerNearbyTick += OnPlayerNearby;
+
             PlayerInteractionDistance = 4f;
-            InteractionBinds.Add(Keys.E, OpenInventory);
+            AddKeyDownAction(Keys.E, OpenInventory);
 
             Inventory = new Inventory("VehicleInventory");
         }
@@ -39,7 +41,8 @@ namespace GTATest.Interactive
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arguments.</param>
-        public override void OnTick(object sender, EventArgs e)
+        /// <exception cref="Exception">A delegate callback throws an exception.</exception>
+        protected override void OnTick(object sender, TickEventArgs e)
         {
             base.OnTick(sender, e);
 
@@ -56,10 +59,9 @@ namespace GTATest.Interactive
         /// Called every tick this <see cref="InteractiveVehicle"/> is nearby a player.
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The event arguments.</param>
-        protected override void OnPlayerNearby(object sender, EventArgs e)
+        /// <param name="e">The tick event arguments.</param>
+        protected virtual void OnPlayerNearby(object sender, TickEventArgs e)
         {
-            base.OnPlayerNearby(sender, e);
             if (!Game.Player.Character.IsInVehicle())
             {
                 Main.DisplayHelpText("Press ~INPUT_CONTEXT~ to access inventory");
@@ -69,9 +71,8 @@ namespace GTATest.Interactive
         /// <summary>
         /// Opens the inventory of this <see cref="InteractiveVehicle"/>.
         /// </summary>
-        /// <param name="o">The sender.</param>
-        /// <param name="eventArgs">The event arguments.</param>
-        protected void OpenInventory(object o, EventArgs eventArgs)
+        /// <param name="tick">The tick.</param>
+        protected void OpenInventory(int tick)
         {
             if (_trunk)
             {

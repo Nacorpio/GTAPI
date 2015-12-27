@@ -295,7 +295,7 @@ namespace GTATest.Controllers
         {
             _entities.ForEach(entity =>
             {
-                entity.KeyDown(sender, e);
+                entity.OnKeyDown(sender, e);
             });
         }
 

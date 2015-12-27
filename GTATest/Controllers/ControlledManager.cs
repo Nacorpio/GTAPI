@@ -107,7 +107,6 @@ namespace GTATest.Controllers
             var control = new ControlledPed(ped);
 
             Add(control);
-            control.Killed += (sender, args) => UI.Notify("Bone: " + args.Bone.ToString());
 
             return ped;
         }
@@ -167,7 +166,7 @@ namespace GTATest.Controllers
         {
             var vehicle = World.CreateVehicle(hash, position);
 
-            Add(new ControlledEntity(vehicle));
+            Add(new ControlledVehicle(vehicle));
 
             if (teleport)
                 Game.Player.Character.Task.WarpIntoVehicle(vehicle, VehicleSeat.Driver);
@@ -196,16 +195,6 @@ namespace GTATest.Controllers
         public void Add(ControlledEntity controlledEntity)
         {
             Add("Default", controlledEntity);
-        }
-
-        /// <summary>
-        /// Adds a <see cref="Entity"/> to the default group.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <exception cref="Exception">A delegate callback throws an exception.</exception>
-        public void Add(Entity entity)
-        {
-            Add(new ControlledEntity(entity));
         }
 
         /// <summary>

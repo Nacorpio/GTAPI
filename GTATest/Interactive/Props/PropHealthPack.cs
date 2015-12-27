@@ -17,11 +17,10 @@ namespace GTATest.Interactive.Props
         /// <summary>
         /// Called when this <see cref="PropPickup"/> has been picked up from the ground.
         /// </summary>
-        /// <param name="o">The sender.</param>
-        /// <param name="eventArgs">The event arguments.</param>
-        protected override void Pickup(object o, EventArgs eventArgs)
+        /// <param name="tick">The tick.</param>
+        protected override void Pickup(int tick)
         {
-            base.Pickup(o, eventArgs);
+            base.Pickup(tick);
 
             if (Game.Player.Character.IsInVehicle()) {
                 return;

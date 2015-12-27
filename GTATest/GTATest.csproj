@@ -75,7 +75,7 @@
     <Compile Include="Interactive\Props\PropPackage.cs" />
     <Compile Include="Interactive\Props\PropPickup.cs" />
     <Compile Include="Items\ItemWeapon.cs" />
-    <Compile Include="ITickable.cs" />
+    <Compile Include="Tickable.cs" />
     <Compile Include="MenuScript.cs" />
     <Compile Include="Menus\InventoryMenu.cs" />
     <Compile Include="Menus\InventoryWeaponsMenu.cs" />
@@ -88,6 +88,7 @@
     <Compile Include="Models\JItemWeapon.cs" />
     <Compile Include="Models\JModel.cs" />
     <Compile Include="Models\JPed.cs" />
+    <Compile Include="Models\JRecipe.cs" />
     <Compile Include="Models\JsonModel.cs" />
     <Compile Include="Models\JVector3.cs" />
     <Compile Include="ObjectSpawner.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Utilities\IPL.cs" />
     <Compile Include="Utilities\IPLRepository.cs" />
     <Compile Include="Utilities\ItemRepository.cs" />
+    <Compile Include="Utilities\RecipeRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interactive\Peds\" />

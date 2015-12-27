@@ -8,6 +8,8 @@ namespace GTATest.Controllers
 {
     public class ControlledPed : ControlledEntity
     {
+        #region EventArgs
+
         /// <summary>
         /// Represents data which is passed through when a <see cref="ControlledPed"/> has been killed.
         /// </summary>
@@ -37,6 +39,11 @@ namespace GTATest.Controllers
             }
 
             /// <summary>
+            /// Determines whether this <see cref="PedKilledEventArgs"/> was a headshot.
+            /// </summary>
+            public bool IsHeadshot => Bone == Bone.SKEL_Head;
+
+            /// <summary>
             /// Gets the killer of this <see cref="PedKilledEventArgs"/>.
             /// </summary>
             public Entity Killer { get; }
@@ -52,6 +59,10 @@ namespace GTATest.Controllers
             public KillType Type { get; }
         }
 
+        #endregion
+
+        #region Delegates
+
         /// <summary>
         /// Handles all the events of the <see cref="ControlledPed"/> class.
         /// </summary>
@@ -66,7 +77,13 @@ namespace GTATest.Controllers
         /// <param name="e"></param>
         public delegate void ControlledPedKilledEventHandler(object sender, PedKilledEventArgs e);
 
+        #endregion
+
+        #region Fields
+
         private bool _isInVehicle, _isInCombat, _isDiving, _isInMeleeCombat, _isClimbing, _isFalling, _isDucking, _isSprinting, _isShooting, _isWalking, _isIdle, _isProne, _isAimingFromCover, _isInTrain, _isReloading, _isGettingUp;
+
+        #endregion
 
         #region Events
 
@@ -182,42 +199,9 @@ namespace GTATest.Controllers
             {
                 Owner = Entity
             };
+
             Dead += OnDead;
-        }
-
-        private void OnDead(object sender, EventArgs eventArgs)
-        {
-            var killer = GetPreviousKiller();
-            if (killer == null)
-            {
-                return;
-            }
-
-            var type = PedKilledEventArgs.KillType.Other;
-            if (Ped.WasKilledByStealth)
-            {
-                type = PedKilledEventArgs.KillType.Stealth;
-            }
-            else if (Ped.WasKilledByTakedown)
-            {
-                type = PedKilledEventArgs.KillType.TakeDown;
-            }
-
-            var bone = new OutputArgument();
-            Function.Call<bool>(Hash.GET_PED_LAST_DAMAGE_BONE, Ped, bone);
-
-            Killed?.Invoke(sender, new PedKilledEventArgs(killer, (Bone) bone.GetResult<int>(), type));
-        }
-
-        /// <summary>
-        /// Gets the model of this <see cref="ControlledPed"/>.
-        /// </summary>
-        /// <returns></returns>
-        public JPed GetModel()
-        {
-            if (((Ped) Entity) != null)
-                return new JPed((Ped) Entity);
-            return null;
+            PlayerNearbyTick += (sender, args) => Main.DisplayHelpText("Press ~INPUT_CONTEXT~ to become gay!");
         }
 
         /// <summary>
@@ -228,7 +212,7 @@ namespace GTATest.Controllers
         /// <summary>
         /// Gets the <see cref="Ped"/> that has been controlled originally.
         /// </summary>
-        public Ped Ped => (Ped) Entity;
+        public Ped Ped => (Ped)Entity;
 
         #region Native Functions
 
@@ -290,7 +274,7 @@ namespace GTATest.Controllers
         /// <summary>
         /// Gets whether this <see cref="ControlledPed"/> is hanging on to a vehicle.
         /// </summary>
-        public bool IsHangingOnToVehicle => Function.Call<bool>((Hash) 0x1C86D8AEF8254B78, Ped);
+        public bool IsHangingOnToVehicle => Function.Call<bool>((Hash)0x1C86D8AEF8254B78, Ped);
 
         /// <summary>
         /// Gets or sets the alertness of this <see cref="ControlledPed"/>.
@@ -342,11 +326,47 @@ namespace GTATest.Controllers
             var o1 = new OutputArgument();
             var value = Function.Call<bool>(Hash.GET_PED_LAST_DAMAGE_BONE, Ped, o1);
 
-            if (value) {
+            if (value)
+            {
                 return o1.GetResult<int>();
             }
 
             return -1;
+        }
+
+        #endregion
+
+        #region Functions
+
+        private void OnDead(object sender, EventArgs eventArgs)
+        {
+            var killer = GetPreviousKiller();
+            if (killer == null) {
+                return;
+            }
+
+            var type = PedKilledEventArgs.KillType.Other;
+            if (Ped.WasKilledByStealth) {
+                type = PedKilledEventArgs.KillType.Stealth;
+            } else if (Ped.WasKilledByTakedown) {
+                type = PedKilledEventArgs.KillType.TakeDown;
+            }
+
+            var bone = new OutputArgument();
+            Function.Call<bool>(Hash.GET_PED_LAST_DAMAGE_BONE, Ped, bone);
+
+            Killed?.Invoke(sender, new PedKilledEventArgs(killer, (Bone) bone.GetResult<int>(), type));
+        }
+
+        /// <summary>
+        /// Gets the model of this <see cref="ControlledPed"/>.
+        /// </summary>
+        /// <returns></returns>
+        public JPed GetModel()
+        {
+            if (((Ped) Entity) != null)
+                return new JPed((Ped) Entity);
+            return null;
         }
 
         #endregion
@@ -357,7 +377,7 @@ namespace GTATest.Controllers
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arguments.</param>
         /// <exception cref="Exception">A delegate callback throws an exception.</exception>
-        public override void OnTick(object sender, EventArgs e)
+        protected override void OnTick(object sender, TickEventArgs e)
         {
             base.OnTick(sender, e);
 

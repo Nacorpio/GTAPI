@@ -16,11 +16,6 @@ namespace GTATest.Interactive
         {}
 
         /// <summary>
-        /// Gets the controller of this <see cref="InteractiveEntity"/>.
-        /// </summary>
-        public ControlledPed Controller => (ControlledPed) SpawnScript.Manager[Entity.Handle];
-
-        /// <summary>
         /// Creates and spawns this <see cref="InteractiveEntity"/>.
         /// </summary>
         /// <param name="hash">The model hash.</param>
@@ -36,5 +31,10 @@ namespace GTATest.Interactive
             SpawnScript.Manager.Add(this);
             return ped;
         }
+
+        /// <summary>
+        /// Gets the controller of this <see cref="InteractiveEntity"/>.
+        /// </summary>
+        public ControlledPed Controller => (ControlledPed) SpawnScript.Manager[Entity.Handle];
     }
 }

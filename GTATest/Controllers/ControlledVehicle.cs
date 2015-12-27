@@ -1,10 +1,9 @@
 ﻿using System;
 using GTA;
-using GTA.Math;
 
 namespace GTATest.Controllers
 {
-    public abstract class ControlledVehicle : ControlledEntity
+    public class ControlledVehicle : ControlledEntity
     {
         /// <summary>
         /// Handles all events within the ControlledVehicle class.
@@ -34,7 +33,7 @@ namespace GTATest.Controllers
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arguments.</param>
         /// <exception cref="Exception">A delegate callback throws an exception.</exception>
-        public override void OnTick(object sender, EventArgs e)
+        protected override void OnTick(object sender, TickEventArgs e)
         {
             base.OnTick(sender, e);
 

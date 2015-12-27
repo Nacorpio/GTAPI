@@ -10,7 +10,7 @@ namespace GTATest.Interactive
         /// Initializes an instance of the <see cref="InteractiveProp"/> class.
         /// </summary>
         /// <param name="model">The model.</param>
-        public InteractiveProp(Model model) : base(model)
+        public InteractiveProp(Model model) : base(model.Hash)
         {}
 
         /// <summary>
@@ -26,8 +26,12 @@ namespace GTATest.Interactive
         /// <param name="prop">The prop.</param>
         public InteractiveProp(Prop prop) : base(prop)
         {
+            PlayerNearbyTick += OnPlayerNearbyTick;
             PlayerInteractionDistance = 2f;
         }
+
+        protected virtual void OnPlayerNearbyTick(object sender, TickEventArgs tickEventArgs)
+        {}
 
         /// <summary>
         /// Creates and spawns this InteractiveProp.
