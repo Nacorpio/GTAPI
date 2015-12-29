@@ -63,6 +63,26 @@ namespace GTATest.Utilities
         }
 
         /// <summary>
+        /// Gets recipes which contain the specified input.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <returns></returns>
+        public static IEnumerable<Recipe> WhichContains(ItemStack input)
+        {
+            return Recipes.Where(r => r.Input.Contains(input));
+        } 
+
+        /// <summary>
+        /// Gets recipes with the specified input needed to be crafted.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <returns></returns>
+        public static IEnumerable<Recipe> With(ItemStack[] input)
+        {
+            return Recipes.Where(r => r.Input == input);
+        }
+
+        /// <summary>
         /// Gets a Recipe with the specified identifier from this <see cref="RecipeRepository"/>.
         /// </summary>
         /// <param name="id">The unique identifier.</param>

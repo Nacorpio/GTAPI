@@ -5,7 +5,7 @@ using GTA;
 
 namespace GTATest
 {
-    public abstract class Tickable
+    public abstract class Tickable : ITickable
     {
         #region EventArgs
 

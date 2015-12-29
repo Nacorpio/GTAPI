@@ -11,6 +11,15 @@
     <AssemblyName>GTATest</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AssemblyInfoFilePath>Properties\AssemblyInfo.cs</AssemblyInfoFilePath>
+    <UpdateAssemblyVersion>True</UpdateAssemblyVersion>
+    <UpdateAssemblyFileVersion>True</UpdateAssemblyFileVersion>
+    <UpdateAssemblyInfoVersion>True</UpdateAssemblyInfoVersion>
+    <AssemblyVersionSettings>IncrementOnDemand.IncrementOnDemand.Increment.None</AssemblyVersionSettings>
+    <AssemblyFileVersionSettings>IncrementOnDemand.IncrementOnDemand.Increment.None</AssemblyFileVersionSettings>
+    <AssemblyInfoVersionSettings>IncrementOnDemand.IncrementOnDemand.Increment.None</AssemblyInfoVersionSettings>
+    <PrimaryVersionType>AssemblyFileVersionAttribute</PrimaryVersionType>
+    <AssemblyVersion>0.0.12.1</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,9 +52,11 @@
       <HintPath>D:\Games\SteamLibrary\SteamApps\common\Grand Theft Auto V\ScriptHookVDotNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -56,6 +67,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ambience\Environment.cs" />
+    <Compile Include="Architecture\Blueprint.cs" />
+    <Compile Include="Architecture\Position.cs" />
+    <Compile Include="Architecture\Sketch.cs" />
     <Compile Include="Controllers\ControlledEntity.cs" />
     <Compile Include="Controllers\ControlledList.cs" />
     <Compile Include="Controllers\ControlledManager.cs" />
@@ -64,6 +78,8 @@
     <Compile Include="Controllers\ControlledPlayer.cs" />
     <Compile Include="Controllers\ControlledProp.cs" />
     <Compile Include="Controllers\ControlledVehicle.cs" />
+    <Compile Include="Controllers\EntityData.cs" />
+    <Compile Include="Controllers\PedData.cs" />
     <Compile Include="Crafting\Recipe.cs" />
     <Compile Include="Interactive\InteractiveEntity.cs" />
     <Compile Include="Interactive\InteractivePed.cs" />
@@ -75,6 +91,10 @@
     <Compile Include="Interactive\Props\PropPackage.cs" />
     <Compile Include="Interactive\Props\PropPickup.cs" />
     <Compile Include="Items\ItemWeapon.cs" />
+    <Compile Include="ITickable.cs" />
+    <Compile Include="Math\Line.cs" />
+    <Compile Include="Math\Math3D.cs" />
+    <Compile Include="Math\Polygon.cs" />
     <Compile Include="Tickable.cs" />
     <Compile Include="MenuScript.cs" />
     <Compile Include="Menus\InventoryMenu.cs" />
@@ -91,7 +111,6 @@
     <Compile Include="Models\JRecipe.cs" />
     <Compile Include="Models\JsonModel.cs" />
     <Compile Include="Models\JVector3.cs" />
-    <Compile Include="ObjectSpawner.cs" />
     <Compile Include="SpawnScript.cs" />
     <Compile Include="Storage\IInventory.cs" />
     <Compile Include="Items\Item.cs" />
@@ -112,6 +131,7 @@
     <Folder Include="Interactive\Vehicles\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

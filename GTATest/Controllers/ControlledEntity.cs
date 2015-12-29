@@ -67,9 +67,9 @@ namespace GTATest.Controllers
                 Vector3 max, min;
                 Entity.Model.GetDimensions(out max, out min);
 
-                var xSize = Math.Max(max.X, min.X) - Math.Min(max.X, min.X);
-                var ySize = Math.Max(max.Y, min.Y) - Math.Min(max.Y, min.Y);
-                var zSize = Math.Max(max.Z, min.Z) - Math.Min(max.Z, min.Z);
+                var xSize = System.Math.Max(max.X, min.X) - System.Math.Min(max.X, min.X);
+                var ySize = System.Math.Max(max.Y, min.Y) - System.Math.Min(max.Y, min.Y);
+                var zSize = System.Math.Max(max.Z, min.Z) - System.Math.Min(max.Z, min.Z);
 
                 return new Vector3(xSize, ySize, zSize);
             }
