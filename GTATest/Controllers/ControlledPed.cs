@@ -11,6 +11,7 @@ namespace GTATest.Controllers
         #region Fields
 
         private bool _isInVehicle, _isInCombat, _isDiving, _isInMeleeCombat, _isClimbing, _isFalling, _isDucking, _isSprinting, _isShooting, _isWalking, _isIdle, _isProne, _isAimingFromCover, _isInTrain, _isReloading, _isGettingUp;
+        private int _lastDamaged = -1, _lastHealth;
 
         #endregion
 
@@ -24,6 +25,7 @@ namespace GTATest.Controllers
                 Owner = Entity
             };
             Dead += OnDead;
+            Damaged += (sender, args) => UI.Notify($"Damaged: {args.Bone}");
         }
 
         /// <summary>
@@ -45,6 +47,19 @@ namespace GTATest.Controllers
         protected override void OnTick(object sender, TickEventArgs e)
         {
             base.OnTick(sender, e);
+
+            if (Ped.Health != _lastHealth)
+            {
+                _lastHealth = Ped.Health;
+                HealthChanged?.Invoke(sender, e);
+            }
+
+            if (GetLastDamagedBone() != _lastDamaged)
+            {
+                var bone = GetLastDamagedBone();
+                _lastDamaged = bone;
+                Damaged?.Invoke(sender, new PedDamagedEventArgs(e.Ticks, (Bone) bone));
+            }
 
             if (Ped.IsGettingUp != _isGettingUp) {
                 _isGettingUp = Ped.IsGettingUp;
@@ -142,9 +157,30 @@ namespace GTATest.Controllers
         #region EventArgs
 
         /// <summary>
+        ///     Represents data which is passed through when a ControlledPed has been taking damage.
+        /// </summary>
+        public class PedDamagedEventArgs : TickEventArgs
+        {
+            /// <summary>
+            /// Initializes an instance of the PedDamagedEventArgs class.
+            /// </summary>
+            /// <param name="tick">The current tick.</param>
+            /// <param name="bone">The bone, which was damaged.</param>
+            public PedDamagedEventArgs(int tick, Bone bone) : base(tick)
+            {
+                Bone = bone;
+            }
+
+            /// <summary>
+            ///     Gets the bone of this PedDamagedEventArgs.
+            /// </summary>
+            public Bone Bone { get; }
+        }
+
+        /// <summary>
         ///     Represents data which is passed through when a <see cref="ControlledPed" /> has been killed.
         /// </summary>
-        public class PedKilledEventArgs : EventArgs
+        public class PedKilledEventArgs : TickEventArgs
         {
             /// <summary>
             ///     Represents a type of kill.
@@ -159,10 +195,11 @@ namespace GTATest.Controllers
             /// <summary>
             ///     Initializes an instance of the <see cref="PedKilledEventArgs" /> class.
             /// </summary>
+            /// <param name="tick">The current tick.</param>
             /// <param name="killer">The killer.</param>
             /// <param name="bone">The bone.</param>
             /// <param name="type">The type of kill.</param>
-            public PedKilledEventArgs(Entity killer, Bone bone, KillType type)
+            public PedKilledEventArgs(int tick, Entity killer, Bone bone, KillType type) : base(tick)
             {
                 Killer = killer;
                 Bone = bone;
@@ -210,21 +247,38 @@ namespace GTATest.Controllers
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arguments.</param>
-        public delegate void ControlledPedEventHandler(object sender, EventArgs e);
+        public delegate void ControlledPedEventHandler(object sender, TickEventArgs e);
 
         /// <summary>
         ///     Handles all the death events of the <see cref="ControlledPed" /> class.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The event arguments.</param>
         public delegate void ControlledPedKilledEventHandler(object sender, PedKilledEventArgs e);
+
+        /// <summary>
+        ///     Handles all the damaged events of the <see cref="ControlledPed"/> class.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The event arguments.</param>
+        public delegate void ControlledPedDamagedEventHandler(object sender, PedDamagedEventArgs e);
 
         #endregion
 
         #region Events
 
         /// <summary>
-        ///     Raised when this ControlledPed
+        ///     Raised when the health of this ControlledPed has changed.
+        /// </summary>
+        public event ControlledPedEventHandler HealthChanged;
+
+        /// <summary>
+        ///     Raised when this ControlledPed has been damaged.
+        /// </summary>
+        public event ControlledPedDamagedEventHandler Damaged;
+
+        /// <summary>
+        ///     Raised when this ControlledPed has been killed.
         /// </summary>
         public event ControlledPedKilledEventHandler Killed;
 
@@ -448,7 +502,7 @@ namespace GTATest.Controllers
 
         #region Functions
 
-        private void OnDead(object sender, EventArgs eventArgs)
+        private void OnDead(object sender, TickEventArgs eventArgs)
         {
             var killer = GetPreviousKiller();
             if (killer == null) {
@@ -465,7 +519,7 @@ namespace GTATest.Controllers
             var bone = new OutputArgument();
             Function.Call<bool>(Hash.GET_PED_LAST_DAMAGE_BONE, Ped, bone);
 
-            Killed?.Invoke(sender, new PedKilledEventArgs(killer, (Bone) bone.GetResult<int>(), type));
+            Killed?.Invoke(sender, new PedKilledEventArgs(eventArgs.Ticks, killer, (Bone) bone.GetResult<int>(), type));
         }
 
         /// <summary>

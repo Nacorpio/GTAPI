@@ -14,7 +14,7 @@ namespace GTATest.Controllers
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event arguments.</param>
-        public delegate void ControlledEntityEventHandler(object sender, EventArgs e);
+        public delegate void ControlledEntityEventHandler(object sender, TickEventArgs e);
 
         private bool _isAlive, _isDead, _isInAir, _isInWater;
 
