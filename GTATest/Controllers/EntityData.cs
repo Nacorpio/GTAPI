@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using GTA;
-using GTA.Math;
 using GTATest.Models;
 using Newtonsoft.Json;
 
@@ -32,6 +31,32 @@ namespace GTATest.Controllers
             Name = name;
             Type = type;
             Properties = new Dictionary<string, dynamic>();
+        }
+
+        /// <summary>
+        /// Copies the information from the specified Entity.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        public virtual void Copy(Entity entity)
+        {
+            Position = new JVector3(entity.Position);
+            Rotation = new JVector3(entity.Rotation);
+            Heading = entity.Heading;
+
+            Alpha = entity.Alpha;
+            IsPersistent = entity.IsPersistent;
+            IsBulletProof = entity.IsBulletProof;
+            IsCollisionProof = entity.IsCollisionProof;
+            IsMeleeProof = entity.IsMeleeProof;
+            IsFireProof = entity.IsFireProof;
+            IsExplosionProof = entity.IsExplosionProof;
+            IsInvincible = entity.IsInvincible;
+            IsOnlyDamagedByPlayer = entity.IsOnlyDamagedByPlayer;
+            IsVisible = entity.IsVisible;
+            LodDistance = entity.LodDistance;
+            MaxHealth = entity.MaxHealth;
+            Health = entity.Health;
+            MaxHealth = entity.MaxHealth;
         }
 
         /// <summary>
