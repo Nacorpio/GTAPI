@@ -1,5 +1,6 @@
 ﻿using GTA;
 using GTA.Math;
+using GTATest.Controllers;
 
 namespace GTATest.Architecture
 {

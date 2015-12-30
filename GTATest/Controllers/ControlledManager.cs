@@ -6,6 +6,7 @@ using GTA;
 using GTA.Math;
 using GTA.Native;
 using GTATest.Interactive;
+using GTATest.Utilities;
 
 namespace GTATest.Controllers
 {
@@ -123,14 +124,7 @@ namespace GTATest.Controllers
         public Prop CreateInteractiveProp(InteractiveProp prop, Vector3 position, Vector3 rotation, bool dynamic, bool onGround)
         {
             var model = new Model(prop.Model);
-            model.Request(250);
-
-            if (!model.IsInCdImage || !model.IsValid) {
-                return null;
-            }
-
-            while (!model.IsLoaded)
-                Script.Wait(50);
+            ModelUtils.Load(model);
 
             return prop.Create(position, rotation, dynamic, onGround);
         }

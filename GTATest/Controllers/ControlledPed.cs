@@ -23,9 +23,7 @@ namespace GTATest.Controllers
             Inventory = new Inventory("Inventory") {
                 Owner = Entity
             };
-
             Dead += OnDead;
-            PlayerNearbyTick += (sender, args) => Main.DisplayHelpText("Press ~INPUT_CONTEXT~ to become gay!");
         }
 
         /// <summary>
@@ -169,7 +167,18 @@ namespace GTATest.Controllers
                 Killer = killer;
                 Bone = bone;
                 Type = type;
+
+                var ped = Killer as Ped;
+                if (ped != null)
+                {
+                    WasKilledByPlayer = ped.IsPlayer;
+                }
             }
+
+            /// <summary>
+            ///     Determines whether this <see cref="PedKilledEventArgs" /> was performed by the player.
+            /// </summary>
+            public bool WasKilledByPlayer { get; }
 
             /// <summary>
             ///     Determines whether this <see cref="PedKilledEventArgs" /> was a headshot.
