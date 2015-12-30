@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using GTA;
 using GTATest.Models;
 using Newtonsoft.Json;
@@ -8,6 +10,8 @@ namespace GTATest.Controllers
     /// <summary>
     /// Represents an entity, which has not yet been spawned.
     /// </summary>
+    [SuppressMessage("ReSharper", "ExceptionNotDocumented")]
+    [SuppressMessage("ReSharper", "CyclomaticComplexity")]
     public abstract class EntityData<T> where T : ControlledEntity
     {
         /// <summary>
@@ -31,6 +35,24 @@ namespace GTATest.Controllers
             Name = name;
             Type = type;
             Properties = new Dictionary<string, dynamic>();
+        }
+
+        /// <summary>
+        /// Saves this <see cref="EntityData{T}"/> as a JSON-formatted file at the specified path.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        public void Save(string path)
+        {
+            var json = JsonConvert.SerializeObject(this,
+                Formatting.Indented,
+
+            new JsonSerializerSettings
+            {
+                NullValueHandling=NullValueHandling.Ignore,
+                DefaultValueHandling=DefaultValueHandling.Ignore
+            });
+
+            File.WriteAllText(path, json);
         }
 
         /// <summary>
